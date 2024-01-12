@@ -6,15 +6,26 @@ import { Typography } from "@mui/material";
 import PageTemplate from "../components/PageTemplate";
 
 const styles = {
-  fontWeight: "900",
-  padding: "100px"
+  generateXpression: {
+    margin: "auto",
+    height: "60vh",
+    background: "rgb(15 15 15)",
+    borderRadius: "25px",
+  },
 };
 
 const HomePage = (props) => {
   return (
-    <Typography sx={styles} align="center" variant="h3">
-      In Development
-    </Typography>
+    <>
+      <PageTemplate>
+        <Typography sx={{ padding: "10px 0 10px 0" }} variant={"h3"}>
+          Compare
+        </Typography>
+        <Box sx={styles.generateXpression}>
+          <ComaprePdf />
+        </Box>
+      </PageTemplate>
+    </>
   );
 };
 

@@ -25,6 +25,9 @@ const SiteHeader = () => {
 
   let menuOptions = [
     { label: "Home", path: "/" },
+    { label: "Generate", path: "/generate" },
+    { label: "Compare", path: "/compare" },
+    { label: "Carry Forward", path: "/carryforward" },
   ];
 
   const handleMenuSelect = (pageURL) => {

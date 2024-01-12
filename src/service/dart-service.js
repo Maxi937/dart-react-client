@@ -29,7 +29,12 @@ export const dartService = {
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
+    return data;
+  },
 
+  async getFilenetPdf(filenet) {
+    console.log(`requesting: api/xpression/${filenet}`)
+    const { data } = await axios.get(`api/xpression/${filenet}`);
     return data;
   },
 };
