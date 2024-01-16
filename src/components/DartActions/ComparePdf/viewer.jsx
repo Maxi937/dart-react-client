@@ -74,8 +74,6 @@ const Viewer = () => {
   const [pdfFile, setpdfFile] = useState("");
   const [candidate, setCandidate] = useState("");
   const [baseline, setBaseline] = useState("");
-  const [code, setCode] = useState("");
-  const [env, setEnv] = useState("");
 
   function handleDropCandidate(file) {
     setCandidate(file);
