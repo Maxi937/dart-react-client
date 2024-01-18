@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MSelect from "../../Form/MSelect/index.jsx";
-import { codes } from "./codes.js";
 import { dartService } from "../../../service/dart-service.js";
 import MDropzone from "./dropzone.jsx";
 import PdfViewer from "../../PdfViewer/index.jsx";
@@ -71,7 +70,6 @@ const styles = {
 
 const Viewer = () => {
   const [pdfFile, setpdfFile] = useState("");
-  const [code, setCode] = useState("");
   const [env, setEnv] = useState("");
   const [filenet, setFilenet] = useState("");
 
@@ -83,10 +81,6 @@ const Viewer = () => {
     setFilenet(event.target.value);
   }
 
-  function handleCodeChange(event) {
-    setCode(event.target.value);
-  }
-
   function handleEnvChange(event) {
     setEnv(event.target.value);
   }
@@ -96,13 +90,11 @@ const Viewer = () => {
   }
 
   async function handleSubmit() {
-    if (!filenet || !code || !env) {
+    if (!filenet || !env) {
       return console.log("all fields not completed");
     }
 
-    console.log(env, code, filenet)
-
-    const data = await dartService.compareCustomisedAgainstOriginal(env, code, filenet);
+    const data = await dartService.getFilenetPdf(filenet, env);
 
     if (data.success) {
       const buf = Uint8Array.from(data.filedata.data);
@@ -131,13 +123,6 @@ const Viewer = () => {
           label={"env"}
           choices={environments}
           onSelectionChange={handleEnvChange}
-        />
-
-        <MSelect
-          disabled={pdfFile}
-          label={"code"}
-          choices={codes}
-          onSelectionChange={handleCodeChange}
         />
 
         <Box sx={styles.buttoncontainer}>

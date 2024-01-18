@@ -32,9 +32,24 @@ export const dartService = {
     return data;
   },
 
-  async getFilenetPdf(filenet) {
-    console.log(`requesting: api/xpression/${filenet}`)
-    const { data } = await axios.get(`api/xpression/${filenet}`);
+  async getFilenetPdf(filenet, env) {
+    const { data } = await axios.post(`api/xpression/${filenet}`, { env: env });
+    return data;
+  },
+
+  async getXDocumentFromFilenet(env, code, filenet) {
+    const { data } = await axios.post(`api/xpression/xdocument/${filenet}`, {
+      env: env,
+      code: code,
+    });
+    return data;
+  },
+
+  async compareCustomisedAgainstOriginal(env, code, filenet) {
+    const { data } = await axios.post(`api/streamdiff/${filenet}`, {
+      env: env,
+      code: code,
+    });
     return data;
   },
 };

@@ -26,6 +26,7 @@ const SiteHeader = () => {
   let menuOptions = [
     { label: "Home", path: "/" },
     { label: "Generate", path: "/generate" },
+    { label: "Filenet", path: "/filenet" },
     { label: "Compare", path: "/compare" },
     { label: "Carry Forward", path: "/carryforward" },
   ];
