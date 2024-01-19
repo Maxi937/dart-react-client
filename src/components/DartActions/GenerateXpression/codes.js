@@ -1,4 +1,6 @@
 export const codes = [
 	"xdvpoi",
-	"xcoivsn"
+	"xcoivsn",
+	"xnbp",
+	"XCI15STD"
 ];

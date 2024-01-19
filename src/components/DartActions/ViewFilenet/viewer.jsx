@@ -142,7 +142,7 @@ const Viewer = () => {
               color="primary"
               sx={styles.submitButton}
             >
-              Generate
+              View Filenet
             </Button>
           )}
         </Box>
@@ -152,14 +152,7 @@ const Viewer = () => {
           <PdfViewer blob={pdfFile} />
         ) : (
           <>
-            <Box sx={styles.dropzone}>
-              <MDropzone
-                handleDrop={handleDrop}
-                acceptedFileTypes={{
-                  "application/xml": [".xml"],
-                }}
-              />
-            </Box>
+            <Box sx={styles.dropzone}></Box>
           </>
         )}
       </Box>

@@ -100,9 +100,13 @@ const Viewer = () => {
       return console.log("all fields not completed");
     }
 
-    console.log(env, code, filenet)
+    console.log(env, code, filenet);
 
-    const data = await dartService.compareCustomisedAgainstOriginal(env, code, filenet);
+    const data = await dartService.compareCustomisedAgainstOriginal(
+      env,
+      code,
+      filenet
+    );
 
     if (data.success) {
       const buf = Uint8Array.from(data.filedata.data);
@@ -167,14 +171,7 @@ const Viewer = () => {
           <PdfViewer blob={pdfFile} />
         ) : (
           <>
-            <Box sx={styles.dropzone}>
-              <MDropzone
-                handleDrop={handleDrop}
-                acceptedFileTypes={{
-                  "application/xml": [".xml"],
-                }}
-              />
-            </Box>
+            <Box sx={styles.dropzone}></Box>
           </>
         )}
       </Box>

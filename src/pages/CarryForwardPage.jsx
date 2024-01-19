@@ -5,6 +5,10 @@ import PageTemplate from "../components/PageTemplate";
 import CarryForward from "../components/DartActions/CarryForward";
 
 const styles = {
+  header: {
+    fontWeight: "900",
+    padding: "100px 100px 50px 100px",
+  },
   generateXpression: {
     margin: "auto",
     height: "60vh",
@@ -16,7 +20,7 @@ const HomePage = (props) => {
   return (
     <>
       <PageTemplate>
-        <Typography sx={{ padding: "10px 0 10px 0" }} variant={"h3"}>
+        <Typography sx={styles.header} align="center" variant="h3">
           Carry Forward Customisations
         </Typography>
         <Box sx={styles.generateXpression}>

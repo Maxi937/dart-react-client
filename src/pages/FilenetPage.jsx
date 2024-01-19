@@ -5,6 +5,10 @@ import PageTemplate from "../components/PageTemplate";
 import ViewFilenet from "../components/DartActions/ViewFilenet";
 
 const styles = {
+  header: {
+    fontWeight: "900",
+    padding: "100px 100px 50px 100px",
+  },
   generateXpression: {
     margin: "auto",
     height: "60vh",
@@ -16,8 +20,8 @@ const HomePage = (props) => {
   return (
     <>
       <PageTemplate>
-        <Typography sx={{ padding: "10px 0 10px 0" }} variant={"h3"}>
-          Filenet
+      <Typography sx={styles.header} align="center" variant="h3">
+          View Filenet
         </Typography>
         <Box sx={styles.generateXpression}>
           <ViewFilenet />

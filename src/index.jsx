@@ -1,6 +1,13 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Navigate, Routes, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Navigate,
+  Routes,
+  Link,
+  useLocation,
+} from "react-router-dom";
 import SiteHeader from "./components/SiteHeader";
 import HomePage from "./pages/HomePage";
 import GeneratePage from "./pages/GeneratePage";
@@ -9,6 +16,7 @@ import CarryForwardPage from "./pages/CarryForwardPage";
 import FilenetPage from "./pages/FilenetPage";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { AnimatePresence } from "framer-motion";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,24 +29,29 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const location = useLocation();
+
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <SiteHeader />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/generate" element={<GeneratePage />} />
-            <Route path="/compare" element={<ComparePage />} />
-            <Route path="/filenet" element={<FilenetPage />} />
-            <Route path="/carryforward" element={<CarryForwardPage />} />
-          </Routes>
-        </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <SiteHeader />
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/generate" element={<GeneratePage />} />
+        <Route path="/compare" element={<ComparePage />} />
+        <Route path="/filenet" element={<FilenetPage />} />
+        <Route path="/carryforward" element={<CarryForwardPage />} />
+      </Routes>
     </>
   );
 }
 
 const rootElement = createRoot(document.getElementById("root"));
-rootElement.render(<App />);
+
+rootElement.render(
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>
+);
