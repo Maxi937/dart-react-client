@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import GeneratePage from "./pages/GeneratePage"
 
 function Router() {
   const location = useLocation();
@@ -7,8 +8,8 @@ function Router() {
   return (
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<HomePage />} />
-      {/* <Route path="/generate" element={<GeneratePage />} />
-      <Route path="/compare" element={<ComparePage />} />
+      <Route path="/generate" element={<GeneratePage />} />
+      {/* <Route path="/compare" element={<ComparePage />} />
       <Route path="/filenet" element={<FilenetPage />} />
       <Route path="/carryforward" element={<CarryForwardPage />} /> */}
     </Routes>
