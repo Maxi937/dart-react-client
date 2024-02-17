@@ -57,8 +57,6 @@ function DocumentModelItem({ documentModel }) {
     }
   }
 
-  console.log(documentModel);
-
   return (
     <Paper sx={styles.container(theme)}>
       <Box sx={styles.docInfo}>
@@ -87,7 +85,5 @@ function DocumentModelItem({ documentModel }) {
     </Paper>
   );
 }
-
-//
 
 export default DocumentModelItem;

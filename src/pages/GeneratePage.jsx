@@ -21,16 +21,10 @@ const styles = {
 };
 
 const GeneratePage = (props) => {
-  const { data, error, isLoading } = useQuery("models", () => dartService.getXpressionDocumentModels("prd"));
-
-  if (isLoading) return <CircularProgress/>;
-
-  if (error) return <div>An error occurred: {error.message}</div>;
-
   return (
     <>
       <PageTemplate>
-        <GenerateForm documentModels={data.models}/>
+        <GenerateForm />
       </PageTemplate>
     </>
   );

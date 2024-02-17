@@ -1,34 +1,32 @@
 import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { dartService } from "../../../service/dart-service.js";
-import DocumentModelPicker from "../../Pickers/DocumentModelPicker/index.jsx";
+import DocumentModelPicker from "../../Pickers/DocumentModelPicker";
 import EnvPicker from "../../Pickers/EnvPicker/index.jsx";
+import DartDropzone from "../../Form/DartDropzone";
+import { Paper } from "@mui/material";
 
 const styles = {
   container: {
     display: "flex",
-    flexDirection: "column",
+    justifyContent: "space-between",
+    gap: "50px",
   },
-  filename: {
-    width: "95%",
-    color: "white",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-  },
-  formUploadFile: {
-    width: "100%",
+  topBar: {
     display: "flex",
-    gap: "15px",
-    alignItems: "center",
-    justifyContent: "left",
-    overflow: "hidden",
+    gap: "20px",
   },
-  form: {
-    padding: "10px",
+  modelContainer: {
+    borderRadius: "20px",
+    flex: 1,
     display: "flex",
     alignItems: "center",
+    background: "black",
+  },
+  dropzone: {
+    padding: "50px",
+    height: "40vh",
   },
   buttoncontainer: {
     marginLeft: "auto",
@@ -47,16 +45,16 @@ const styles = {
   },
 };
 
-function GenerateForm({ documentModels }) {
+function GenerateForm() {
   const [pdfFile, setpdfFile] = useState("");
-  const [file, setSelectedFile] = useState("");
+  const [files, setSelectedFiles] = useState([]);
   const [code, setCode] = useState("");
   const [env, setEnv] = useState("");
 
-  const documentNames = documentModels.map((model) => model.mdl_nm)
-
   function handleDrop(file) {
-    setSelectedFile(file);
+    const fileList = files;
+    fileList.push(file);
+    setSelectedFiles(fileList);
   }
 
   function handleCodeChange(event) {
@@ -85,31 +83,14 @@ function GenerateForm({ documentModels }) {
   }
 
   return (
-    <Box sx={styles.container}>
-      <Box>
-        <EnvPicker envs={["dev", "qar", "prd"] }/>
-        <DocumentModelPicker documentModels={documentModels}/>
-        <Box sx={styles.buttoncontainer}>
-          {pdfFile ? (
-            <Button
-              onClick={handleClear}
-              type="submit"
-              color="primary"
-              sx={styles.submitButton}
-            >
-              Clear
-            </Button>
-          ) : (
-            <Button
-              onClick={handleSubmit}
-              type="submit"
-              color="primary"
-              sx={styles.submitButton}
-            >
-              Generate
-            </Button>
-          )}
-        </Box>
+    <Box>
+      <Box sx={styles.topBar}>
+        <EnvPicker envs={["dev", "qar", "prd"]} />
+        <DocumentModelPicker />
+      </Box>
+
+      <Box sx={styles.dropzone}>
+        <DartDropzone />
       </Box>
     </Box>
   );
