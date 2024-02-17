@@ -89,8 +89,6 @@ const Viewer = () => {
     if (!file || !code || !env) {
       return console.log("all fields not completed");
     }
-
-    console.log(file)
     const data = await dartService.testGenerateXpression(env, code, file);
 
     if (data.success) {

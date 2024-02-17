@@ -52,4 +52,13 @@ export const dartService = {
     });
     return data;
   },
+
+  async getXpressionDocumentModels(env) {
+    const { data } = await axios.get(`/api/xpression/models`, {
+      params: {
+        env: env,
+      },
+    });
+    return data;
+  },
 };

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import BrandStyledTextFat from "../Text/BrandStyledTextFat";
 
 const styles = {
   title: {
@@ -23,13 +24,7 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  let menuOptions = [
-    { label: "Home", path: "/" },
-    { label: "Generate", path: "/generate" },
-    { label: "Filenet", path: "/filenet" },
-    { label: "Compare", path: "/compare" },
-    { label: "Carry Forward", path: "/carryforward" },
-  ];
+  let menuOptions = [{ label: "Home", path: "/" }];
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL);
@@ -41,14 +36,24 @@ const SiteHeader = () => {
 
   return (
     <>
-      <AppBar sx={{ backgroundColor: "black"}} position="fixed" elevation={0} color="primary">
+      <AppBar
+        sx={{ backgroundColor: "transparent" }}
+        position="fixed"
+        elevation={0}
+        color="primary"
+      >
         <Toolbar>
-          <Typography variant="h4" sx={styles.title}>
-            Dart
-          </Typography>
+          <Box sx={styles.title}>
+            <BrandStyledTextFat text={"DART"} />
+          </Box>
+
           <>
             {menuOptions.map((opt) => (
-              <Button key={opt.label} color="inherit" onClick={() => handleMenuSelect(opt.path)}>
+              <Button
+                key={opt.label}
+                color="inherit"
+                onClick={() => handleMenuSelect(opt.path)}
+              >
                 {opt.label}
               </Button>
             ))}
