@@ -16,18 +16,14 @@ const styles = {
     height: "inherit",
     background: "black",
     borderRadius: "15px",
-
   },
-  deleteButton: (theme) => {
-    return {
-      color: "white",
-      transition: "all 0.2s ease",
-      "&:hover": {
-        color: "red",
-      },
-    };
+  deleteButton: {
+    color: "white",
+    transition: "all 0.2s ease",
+    "&:hover": {
+      color: "red",
+    },
   },
-  del: {},
 };
 
 const FileList = ({ files, setFiles = () => {} }) => {
@@ -42,7 +38,7 @@ const FileList = ({ files, setFiles = () => {} }) => {
   }
 
   return (
-    <TableContainer sx={styles.container} component={Box} >
+    <TableContainer sx={styles.container} component={Box}>
       <Table aria-label="simple table" sx={{ tableLayout: "fixed" }}>
         <TableHead>
           <TableRow>
@@ -51,7 +47,7 @@ const FileList = ({ files, setFiles = () => {} }) => {
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
-        <TableBody >
+        <TableBody>
           {files.map((file) => (
             <TableRow key={file.name} sx={{ "& > *": { border: 0 } }}>
               <TableCell component="th" scope="row">
@@ -65,7 +61,7 @@ const FileList = ({ files, setFiles = () => {} }) => {
                     handleDelete(file);
                   }}
                 >
-                  <ClearOutlinedIcon sx={styles.deleteButton(theme)} />
+                  <ClearOutlinedIcon sx={styles.deleteButton} />
                 </IconButton>
               </TableCell>
             </TableRow>
