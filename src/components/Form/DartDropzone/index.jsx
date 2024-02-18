@@ -7,7 +7,9 @@ import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
 import FileList from "./FileList";
 import { IconButton } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
-import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
+import Modal from "@mui/material/Modal";
+import { useTheme } from "@emotion/react";
 
 const styles = {
   container: {
@@ -36,28 +38,63 @@ const styles = {
   iconContainer: {
     position: "absolute",
   },
+  folderIcon: (theme) => {
+    return {
+      fontSize: "50px",
+      color: "white",
+	  transition: "all 0.2s ease",
+      "&:hover": {
+        color: theme.palette.primaryHighlight,
+      },
+    };
+  },
   fileListContainer: {
-	flexGrow: 1,
-	textAlign: "right",
+    flexGrow: 1,
+    textAlign: "right",
     alignSelf: "flex-start",
+  },
+  modalContent: {
+    position: "absolute",
+    padding: "20px",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "50vw",
+    height: "60vh",
+    bgcolor: "#242424",
+    border: "2px solid #000",
+    boxShadow: 24,
+    // p: 4,
   },
 };
 
 const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
+  const theme = useTheme();
   const [files, setSelectedFiles] = useState([]);
+  const [open, setOpen] = useState(false);
 
-  const onDrop = (acceptedFiles) => {
+  function onDrop(acceptedFiles) {
     setSelectedFiles(acceptedFiles);
     handleDrop(acceptedFiles);
-  };
+  }
 
-  const icon = files ? (
-    <>
-      <FileDownloadDoneIcon style={{ fontSize: "5cqmax" }} />
-    </>
-  ) : (
-    <FileDownloadIcon style={{ fontSize: "5cqmax" }} />
-  );
+  function handleClose() {
+    setOpen(false);
+  }
+
+  function handleFolderClick(e) {
+    setOpen(true);
+    e.stopPropagation();
+  }
+
+  const icon =
+    files.length >= 1 ? (
+      <>
+        <FileDownloadDoneIcon style={{ fontSize: "5cqmax" }} />
+      </>
+    ) : (
+      <FileDownloadIcon style={{ fontSize: "5cqmax" }} />
+    );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -74,11 +111,25 @@ const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
         <Input {...getInputProps()} />
         <Box sx={styles.iconContainer}>{icon}</Box>
         <Box sx={styles.fileListContainer}>
-          <IconButton aria-label="fileList" onClick={{}}>
-            {files.length >= 1 ? <FolderIcon sx={{ fontSize: "50px", color: "white" }} /> : <FolderOutlinedIcon sx={{ fontSize: "50px", color: "white" }} />}
+          <IconButton aria-label="fileList" onClick={handleFolderClick}>
+            {files.length >= 1 ? (
+              <FolderIcon sx={styles.folderIcon(theme)} />
+            ) : (
+              <FolderOutlinedIcon sx={styles.folderIcon(theme)} />
+            )}
           </IconButton>
         </Box>
       </Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={styles.modalContent}>
+          <FileList files={files} setFiles={setSelectedFiles}/>
+        </Box>
+      </Modal>
     </Box>
   );
 };
