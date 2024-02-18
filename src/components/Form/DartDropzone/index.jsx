@@ -4,13 +4,21 @@ import { useDropzone } from "react-dropzone";
 import { Input, Typography } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
+import FileList from "./FileList";
+import { IconButton } from "@mui/material";
+import FolderIcon from "@mui/icons-material/Folder";
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 
 const styles = {
+  container: {
+    height: "inherit",
+    display: "flex",
+    gap: "20px",
+  },
   inputZone: (isDragActive) => {
     return {
-      height: "inherit",
       display: "flex",
-      flexDirection: "column",
+      flexGrow: 1,
       color: isDragActive ? "gold" : "white",
       border: isDragActive ? "3px gold dashed" : "3px white dashed",
       alignItems: "center",
@@ -25,20 +33,27 @@ const styles = {
       },
     };
   },
+  iconContainer: {
+    position: "absolute",
+  },
+  fileListContainer: {
+	flexGrow: 1,
+	textAlign: "right",
+    alignSelf: "flex-start",
+  },
 };
 
 const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
-  const [file, setSelectedFile] = useState("");
+  const [files, setSelectedFiles] = useState([]);
 
   const onDrop = (acceptedFiles) => {
-    setSelectedFile(acceptedFiles[0]);
-    handleDrop(acceptedFiles[0]);
+    setSelectedFiles(acceptedFiles);
+    handleDrop(acceptedFiles);
   };
 
-  const icon = file ? (
+  const icon = files ? (
     <>
       <FileDownloadDoneIcon style={{ fontSize: "5cqmax" }} />
-      <Typography sx={{ overflow: "hidden" }}>{file.name}</Typography>
     </>
   ) : (
     <FileDownloadIcon style={{ fontSize: "5cqmax" }} />
@@ -50,13 +65,20 @@ const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
   });
 
   return (
-    <Box
-      id={"inputZone"}
-      sx={styles.inputZone(isDragActive)}
-      {...getRootProps({ className: "dropzone" })}
-    >
-      <Input {...getInputProps()} />
-      {icon}
+    <Box sx={styles.container}>
+      <Box
+        id={"inputZone"}
+        sx={styles.inputZone(isDragActive)}
+        {...getRootProps({ className: "dropzone" })}
+      >
+        <Input {...getInputProps()} />
+        <Box sx={styles.iconContainer}>{icon}</Box>
+        <Box sx={styles.fileListContainer}>
+          <IconButton aria-label="fileList" onClick={{}}>
+            {files.length >= 1 ? <FolderIcon sx={{ fontSize: "50px", color: "white" }} /> : <FolderOutlinedIcon sx={{ fontSize: "50px", color: "white" }} />}
+          </IconButton>
+        </Box>
+      </Box>
     </Box>
   );
 };

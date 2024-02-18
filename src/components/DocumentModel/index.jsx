@@ -12,6 +12,13 @@ const styles = {
       gap: "5px",
       padding: "20px",
       backgroundColor: theme.palette.primaryForeground,
+      cursor: "pointer",
+      transition: "all 0.2s ease",
+      border: "solid 1px black",
+      "&:hover": {
+        color: theme.palette.primaryHighlight,
+        border: `solid 1px ${theme.palette.primaryHighlight}`,
+      },
     };
   },
   outerContainer: {},
@@ -25,8 +32,7 @@ const styles = {
     fontStyle: "italic",
   },
   modeldsc: {
-    paddingTop: "20px"
-
+    paddingTop: "20px",
   },
   chips: {
     flex: 1,
@@ -41,7 +47,7 @@ const styles = {
   },
 };
 
-function DocumentModelItem({ documentModel }) {
+function DocumentModelItem({ documentModel, onClick = (documentModel) => {} }) {
   const theme = useTheme();
 
   function docgenTypeColor(docgentype) {
@@ -57,8 +63,15 @@ function DocumentModelItem({ documentModel }) {
     }
   }
 
+  function handleClick() {
+    onClick(documentModel)
+  }
+
   return (
-    <Paper sx={styles.container(theme)}>
+    <Paper
+      sx={styles.container(theme)}
+      onClick={handleClick}
+    >
       <Box sx={styles.docInfo}>
         <Typography sx={styles.modelcode}>{documentModel.mdl_cd}</Typography>
         <Typography>{documentModel.mdl_nm}</Typography>

@@ -48,21 +48,26 @@ const styles = {
 function GenerateForm() {
   const [pdfFile, setpdfFile] = useState("");
   const [files, setSelectedFiles] = useState([]);
-  const [code, setCode] = useState("");
+  const [documentModel, setDocumentModel] = useState({});
   const [env, setEnv] = useState("");
 
-  function handleDrop(file) {
+  function handleDrop(newFiles) {
     const fileList = files;
-    fileList.push(file);
-    setSelectedFiles(fileList);
+
+    console.log(newFiles)
+    // fileList.push(file);
+    // setSelectedFiles(fileList);
+    // console.log(files)
   }
 
-  function handleCodeChange(event) {
-    setCode(event.target.value);
+  function handleDocumentModelChange(documentModel) {
+    console.log(documentModel);
+    setDocumentModel(documentModel);
   }
 
-  function handleEnvChange(event) {
-    setEnv(event.target.value);
+  function handleEnvChange(env) {
+    console.log(env);
+    setEnv(env);
   }
 
   function handleClear() {
@@ -85,12 +90,12 @@ function GenerateForm() {
   return (
     <Box>
       <Box sx={styles.topBar}>
-        <EnvPicker envs={["dev", "qar", "prd"]} />
-        <DocumentModelPicker />
+        <EnvPicker envs={["dev", "qar", "prd"]} onSelected={handleEnvChange} />
+        <DocumentModelPicker onSelected={handleDocumentModelChange} />
       </Box>
 
       <Box sx={styles.dropzone}>
-        <DartDropzone />
+        <DartDropzone acceptedFileTypes={{ "text/xml": [".xml"] }} handleDrop={handleDrop}/>
       </Box>
     </Box>
   );

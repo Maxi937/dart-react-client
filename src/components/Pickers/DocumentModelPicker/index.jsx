@@ -1,10 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Box } from "@mui/material";
-import { dartService } from "../../../service/dart-service.js";
-import DocumentModes from "../../Pickers/DocumentModelPicker/DocumentPicker.jsx";
 import { Typography } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useQuery } from "react-query";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Modal from "@mui/material/Modal";
@@ -28,7 +24,8 @@ const styles = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "60%",
+    width: "50vw",
+    height: "60vh",
     bgcolor: "#242424",
     border: "2px solid #000",
     boxShadow: 24,
@@ -36,17 +33,9 @@ const styles = {
   },
 };
 
-function DocumentModelPicker() {
+function DocumentModelPicker({ onSelected = (documentModel) => {} }) {
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
-
-  const { data, error, isLoading } = useQuery("models", () =>
-    dartService.getXpressionDocumentModels("prd")
-  );
-
-  if (isLoading) return <CircularProgress />;
-
-  if (error) return <div>An error occurred: {error.message}</div>;
 
   function handleIconClick() {
     setOpen(true);
@@ -56,14 +45,16 @@ function DocumentModelPicker() {
     setOpen(false);
   }
 
-  const documentModels = data.models;
-
-  console.log(documentModels);
+  function handleSelected(document) {
+    setSelected(document);
+    onSelected(document);
+	handleClose();
+  }
 
   return (
     <Box sx={styles.container}>
       <Typography sx={{ padding: "0px 20px" }}>
-        {selected ? selected : "Document Code"}
+        {selected ? selected.mdl_nm : "Document Code"}
       </Typography>
       <Box sx={styles.iconContainer}>
         <IconButton
@@ -81,7 +72,7 @@ function DocumentModelPicker() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={styles.modalContent}>
-          <DocumentModels documentModels={documentModels} />
+          <DocumentModels onSelected={handleSelected} />
         </Box>
       </Modal>
     </Box>

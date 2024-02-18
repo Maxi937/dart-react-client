@@ -6,6 +6,8 @@ import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import CallMergeIcon from '@mui/icons-material/CallMerge';
 import DartActionMenuItem from "./DartActionMenuItem";
+import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
+import MonitorHeartOutlinedIcon from '@mui/icons-material/MonitorHeartOutlined';
 import { useNavigate } from "react-router-dom";
 
 const styles = {
@@ -48,6 +50,16 @@ const dartActions = [
     title: "Migration",
     route: "/migration",
   },
+  {
+    icon: MonitorHeartOutlinedIcon,
+    title: "Monitor",
+    route: "/monitor",
+  },
+  {
+    icon: AutoStoriesOutlinedIcon,
+    title: "Documentation",
+    route: "/documentation",
+  }
 ];
 
 function DartActionMenu() {
