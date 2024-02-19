@@ -88,6 +88,16 @@ const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
     handleDrop(files);
   }
 
+  function handleDelete(index) {
+    const result = files.filter((_, indx) => {
+      return index != indx;
+    });
+
+    setSelectedFiles(result);
+
+    handleDrop(result);
+  }
+
   function handleClose() {
     setOpen(false);
   }
@@ -137,7 +147,7 @@ const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={styles.modalContent}>
-          <FileList files={files} setFiles={setSelectedFiles} />
+          <FileList files={files} onDelete={handleDelete} />
         </Box>
       </Modal>
     </Box>

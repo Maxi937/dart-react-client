@@ -24,23 +24,20 @@ const styles = {
       color: "red",
     },
   },
+  fileName: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
 };
 
-const FileList = ({ files, setFiles = () => {} }) => {
-  function handleDelete(index) {
-    setFiles(
-      files.filter((_, indx) => {
-        return index != indx;
-      })
-    );
-  }
-
+const FileList = ({ files, onDelete = () => {} }) => {
   return (
     <TableContainer sx={styles.container} component={Box}>
       <Table aria-label="simple table" sx={{ tableLayout: "fixed" }}>
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
+            <TableCell colSpan={2}>Name</TableCell>
             <TableCell align="right">Size</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
@@ -51,7 +48,12 @@ const FileList = ({ files, setFiles = () => {} }) => {
               key={`${file.name}-${index}`}
               sx={{ "& > *": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell
+                colSpan={2}
+                sx={styles.fileName}
+                component="th"
+                scope="row"
+              >
                 {file.name}
               </TableCell>
               <TableCell align="right">{file.size} kb</TableCell>
@@ -59,7 +61,7 @@ const FileList = ({ files, setFiles = () => {} }) => {
                 <IconButton
                   aria-label="deleteFile"
                   onClick={() => {
-                    handleDelete(index);
+                    onDelete(index);
                   }}
                 >
                   <ClearOutlinedIcon sx={styles.deleteButton} />

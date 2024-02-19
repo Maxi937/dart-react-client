@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, Typography } from "@mui/material";
 import { dartService } from "../../../service/dart-service.js";
 import DocumentModelPicker from "../../Pickers/DocumentModelPicker";
 import EnvPicker from "../../Pickers/EnvPicker/index.jsx";
 import DartDropzone from "../../Form/DartDropzone";
-import { Paper } from "@mui/material";
 
 const styles = {
   container: {
@@ -28,40 +27,48 @@ const styles = {
     padding: "50px",
     height: "40vh",
   },
-  buttoncontainer: {
-    marginLeft: "auto",
-  },
-  submitButton: {
-    fontWeight: "bold",
-    backgroundColor: "transparent",
-    filter: "brightness(90%)",
-    color: "white",
-    transition: "all 0.2s ease",
-    "&:hover": {
-      color: "black",
-      backgroundColor: "gold",
-      filter: "brightness(100%)",
-    },
+  submitButton: (canGenerate) => {
+    return {
+      fontWeight: "bold",
+      backgroundColor: "black",
+      color: canGenerate ? "white" : "grey",
+      transition: "all 0.2s ease",
+      "&:hover": {
+        color: canGenerate ? "black" : "grey",
+        backgroundColor: canGenerate ? "rgba(10,190,265,1)" : "black",
+      },
+    };
   },
 };
 
 function GenerateForm() {
   const [pdfFile, setpdfFile] = useState("");
   const [files, setSelectedFiles] = useState([]);
-  const [documentModel, setDocumentModel] = useState({});
+  const [documentModel, setDocumentModel] = useState(null);
+  const [canGenerate, setCanGenerate] = useState(false);
   const [env, setEnv] = useState("");
 
-  function handleDrop(newFiles) {
-    setSelectedFiles(newFiles)
+  useEffect(() => {
+    console.log(files);
+    if (files.length >= 1 && env && documentModel) {
+      return setCanGenerate(true);
+    }
+    return setCanGenerate(false);
+  });
+
+  function handleDrop(droppedFiles) {
+    const result = [];
+    droppedFiles.map((file) => {
+      result.push(file);
+    });
+    setSelectedFiles(result);
   }
 
   function handleDocumentModelChange(documentModel) {
-    console.log(documentModel);
     setDocumentModel(documentModel);
   }
 
   function handleEnvChange(env) {
-    console.log(env);
     setEnv(env);
   }
 
@@ -70,15 +77,17 @@ function GenerateForm() {
   }
 
   async function handleSubmit() {
-    if (!file || !code || !env) {
+    if (!files.length >= 1 || !documentModel || !env) {
       return console.log("all fields not completed");
     }
-    const data = await dartService.testGenerateXpression(env, code, file);
+    console.log(`generating ${env}\t${documentModel.mdl_cd}\t${files}}`)
+    const data = await dartService.generateXpression(env, documentModel.mdl_name, files);
 
     if (data.success) {
-      const buf = Uint8Array.from(data.filedata.data);
-      const file = new File([buf], data.filename, { type: "application/pdf" });
-      setpdfFile(file);
+      console.log(data);
+      // const buf = Uint8Array.from(data.filedata.data);
+      // const file = new File([buf], data.filename, { type: "application/pdf" });
+      // setpdfFile(file);
     }
   }
 
@@ -87,10 +96,21 @@ function GenerateForm() {
       <Box sx={styles.topBar}>
         <EnvPicker envs={["dev", "qar", "prd"]} onSelected={handleEnvChange} />
         <DocumentModelPicker onSelected={handleDocumentModelChange} />
+        <Button
+          onClick={handleSubmit}
+          type="submit"
+          color="primary"
+          sx={styles.submitButton(canGenerate)}
+        >
+          Generate
+        </Button>
       </Box>
 
       <Box sx={styles.dropzone}>
-        <DartDropzone acceptedFileTypes={{ "text/xml": [".xml"] }} handleDrop={handleDrop}/>
+        <DartDropzone
+          acceptedFileTypes={{ "text/xml": [".xml"] }}
+          handleDrop={handleDrop}
+        />
       </Box>
     </Box>
   );
