@@ -47,7 +47,7 @@ function DocumentModels({ onSelected = (document) => {} }) {
       </Box>
     );
 
-  if (error)
+  if (error || !data.success)
     return (
       <Box
         sx={{ display: "flex", height: "inherit", justifyContent: "center" }}

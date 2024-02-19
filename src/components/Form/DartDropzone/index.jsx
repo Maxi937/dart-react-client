@@ -20,15 +20,17 @@ const styles = {
   inputZone: (isDragActive) => {
     return {
       display: "flex",
-	  boxShadow: "15",
+      boxShadow: "15",
       flexGrow: 1,
       color: isDragActive ? "rgba(10,190,265,1)" : "white",
-      border: isDragActive ? "3px rgba(10,190,265,1) dashed" : "3px white dashed",
+      border: isDragActive
+        ? "3px rgba(10,190,265,1) dashed"
+        : "3px white dashed",
       alignItems: "center",
       justifyContent: "center",
       transition: "all 0.3s ease",
       borderRadius: "25px",
-	  backgroundColor: "black",
+      backgroundColor: "black",
       cursor: "pointer",
       "&:hover": {
         color: "rgba(10,190,265,1)",
@@ -44,7 +46,7 @@ const styles = {
     return {
       fontSize: "50px",
       color: "white",
-	  transition: "all 0.2s ease",
+      transition: "all 0.2s ease",
       "&:hover": {
         color: theme.palette.primaryHighlight,
       },
@@ -75,9 +77,15 @@ const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
   const [files, setSelectedFiles] = useState([]);
   const [open, setOpen] = useState(false);
 
-  function onDrop(acceptedFiles) {
-    setSelectedFiles(acceptedFiles);
-    handleDrop(acceptedFiles);
+  function onDrop(droppedFiles) {
+    const result = files;
+
+    droppedFiles.map((file) => {
+      result.push(file);
+    });
+
+    setSelectedFiles(result);
+    handleDrop(files);
   }
 
   function handleClose() {
@@ -129,7 +137,7 @@ const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={styles.modalContent}>
-          <FileList files={files} setFiles={setSelectedFiles}/>
+          <FileList files={files} setFiles={setSelectedFiles} />
         </Box>
       </Modal>
     </Box>

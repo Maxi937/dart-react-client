@@ -27,12 +27,10 @@ const styles = {
 };
 
 const FileList = ({ files, setFiles = () => {} }) => {
-  const theme = useTheme();
-
-  function handleDelete(fileToBeDeleted) {
+  function handleDelete(index) {
     setFiles(
-      files.filter((file) => {
-        return file.name != fileToBeDeleted.name;
+      files.filter((_, indx) => {
+        return index != indx;
       })
     );
   }
@@ -48,8 +46,11 @@ const FileList = ({ files, setFiles = () => {} }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {files.map((file) => (
-            <TableRow key={file.name} sx={{ "& > *": { border: 0 } }}>
+          {files.map((file, index) => (
+            <TableRow
+              key={`${file.name}-${index}`}
+              sx={{ "& > *": { border: 0 } }}
+            >
               <TableCell component="th" scope="row">
                 {file.name}
               </TableCell>
@@ -58,7 +59,7 @@ const FileList = ({ files, setFiles = () => {} }) => {
                 <IconButton
                   aria-label="deleteFile"
                   onClick={() => {
-                    handleDelete(file);
+                    handleDelete(index);
                   }}
                 >
                   <ClearOutlinedIcon sx={styles.deleteButton} />

@@ -52,12 +52,7 @@ function GenerateForm() {
   const [env, setEnv] = useState("");
 
   function handleDrop(newFiles) {
-    const fileList = files;
-
-    console.log(newFiles)
-    // fileList.push(file);
-    // setSelectedFiles(fileList);
-    // console.log(files)
+    setSelectedFiles(newFiles)
   }
 
   function handleDocumentModelChange(documentModel) {
