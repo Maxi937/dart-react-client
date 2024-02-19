@@ -20,18 +20,20 @@ const styles = {
   inputZone: (isDragActive) => {
     return {
       display: "flex",
+	  boxShadow: "15",
       flexGrow: 1,
-      color: isDragActive ? "gold" : "white",
-      border: isDragActive ? "3px gold dashed" : "3px white dashed",
+      color: isDragActive ? "rgba(10,190,265,1)" : "white",
+      border: isDragActive ? "3px rgba(10,190,265,1) dashed" : "3px white dashed",
       alignItems: "center",
       justifyContent: "center",
       transition: "all 0.3s ease",
-      borderRadius: "5px",
+      borderRadius: "25px",
+	  backgroundColor: "black",
       cursor: "pointer",
       "&:hover": {
-        color: "gold",
+        color: "rgba(10,190,265,1)",
         backgroundColor: "black",
-        border: "3px gold dashed",
+        border: "3px rgba(10,190,265,1) dashed",
       },
     };
   },

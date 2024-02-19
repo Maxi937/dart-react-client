@@ -18,6 +18,12 @@ const styles = {
     flexGrow: 1,
     textAlign: "right",
   },
+  icon: {
+    color: "white",
+    "&:hover": {
+      color: "rgba(10,190,265,1)",
+    },
+  },
   modalContent: {
     position: "absolute",
     padding: "20px",
@@ -48,21 +54,23 @@ function DocumentModelPicker({ onSelected = (documentModel) => {} }) {
   function handleSelected(document) {
     setSelected(document);
     onSelected(document);
-	handleClose();
+    handleClose();
   }
 
   return (
     <Box sx={styles.container}>
-      <Typography sx={{ padding: "0px 20px" }}>
-        {selected ? selected.mdl_nm : "Document Code"}
-      </Typography>
+      {selected ? (
+        <Typography sx={{ padding: "0px 20px" }}>
+          {selected.mdl_nm}
+        </Typography>
+      ) : (
+        <Typography sx={{ padding: "0px 20px", color: "grey" }}>
+          Document Code
+        </Typography>
+      )}
       <Box sx={styles.iconContainer}>
-        <IconButton
-          sx={{ position: "relative" }}
-          aria-label="searchModel"
-          onClick={handleIconClick}
-        >
-          <SearchIcon sx={{ color: "white" }} />
+        <IconButton aria-label="searchModel" onClick={handleIconClick}>
+          <SearchIcon sx={styles.icon} />
         </IconButton>
       </Box>
       <Modal

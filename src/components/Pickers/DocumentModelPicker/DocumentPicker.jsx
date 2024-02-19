@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import DocumentModel from "../../DocumentModel";
-import { Box } from "@mui/material";
-import { Paper } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Input, InputLabel, TextField } from "@mui/material";
 import { dartService } from "../../../service/dart-service.js";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -38,8 +38,25 @@ function DocumentModels({ onSelected = (document) => {} }) {
     dartService.getXpressionDocumentModels("prd")
   );
 
-  if (isLoading) return <CircularProgress />;
-  if (error) return <div>An error occurred: {error.message}</div>;
+  if (isLoading)
+    return (
+      <Box
+        sx={{ display: "flex", height: "inherit", justifyContent: "center" }}
+      >
+        <CircularProgress sx={{ alignSelf: "center" }} />
+      </Box>
+    );
+
+  if (error)
+    return (
+      <Box
+        sx={{ display: "flex", height: "inherit", justifyContent: "center" }}
+      >
+        <Typography sx={{ alignSelf: "center" }}>
+          An unexpected error occurred {error?.message}
+        </Typography>
+      </Box>
+    );
 
   function searchModels() {
     return data.models.filter((model) => {
@@ -48,7 +65,7 @@ function DocumentModels({ onSelected = (document) => {} }) {
   }
 
   function HandleDocumentClick(document) {
-    onSelected(document)
+    onSelected(document);
   }
 
   return (
