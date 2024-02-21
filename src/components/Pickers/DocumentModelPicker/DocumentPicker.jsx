@@ -17,7 +17,6 @@ const styles = {
   },
   search: {
     margin: "20px 0px",
-    width: "100%",
     borderRadius: "10px",
     input: {
       backgroundColor: "black",
@@ -52,8 +51,8 @@ function DocumentModels({ onSelected = (document) => {} }) {
       <Box
         sx={{ display: "flex", height: "inherit", justifyContent: "center" }}
       >
-        <Typography sx={{ alignSelf: "center" }}>
-          An unexpected error occurred {error?.message}
+        <Typography sx={{ color: "red", alignSelf: "center" }}>
+          {error?.message}
         </Typography>
       </Box>
     );

@@ -4,19 +4,29 @@ import { registerAxiosResponseHandler } from "../utils/service-utils.js";
 registerAxiosResponseHandler(axios);
 
 export const dartService = {
-  async getData() {
-    const { data } = await axios.get("api/xpression");
+  async getEnvironments() {
+    const { data } = await axios.get("api/dart/environments");
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
     return data;
   },
 
-  async generateXpression(env, documentModelCode, file) {
+  async generateXpression(env, documentModelCode, file, signal = null) {
     const { data } = await axios.post(
       "api/xpression",
       { documentModelCode: documentModelCode, file: file, env: env },
       {
         headers: { "Content-Type": "multipart/form-data" },
+        signal,
       }
     );
+
+    if (!data.success) {
+      throw new Error(data.document);
+    }
 
     return data;
   },
@@ -29,6 +39,11 @@ export const dartService = {
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
     return data;
   },
 
@@ -59,6 +74,11 @@ export const dartService = {
         env: env,
       },
     });
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
     return data;
   },
 };

@@ -72,7 +72,7 @@ const styles = {
   },
 };
 
-const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
+const MDropzone = ({ handleDrop, acceptedFileTypes, singleFile=false }) => {
   const theme = useTheme();
   const [files, setSelectedFiles] = useState([]);
   const [open, setOpen] = useState(false);
@@ -83,6 +83,13 @@ const MDropzone = ({ handleDrop, acceptedFileTypes }) => {
     droppedFiles.map((file) => {
       result.push(file);
     });
+
+    if(singleFile) {
+      const file = result.slice(-1)
+      setSelectedFiles([...file]);
+      handleDrop(file);
+      return
+    }
 
     setSelectedFiles(result);
     handleDrop(files);

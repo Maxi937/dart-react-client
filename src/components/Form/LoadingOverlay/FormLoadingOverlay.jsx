@@ -4,7 +4,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { dartService } from "../../../service/dart-service.js";
 import DocumentModelPicker from "../../Pickers/DocumentModelPicker/index.jsx";
 import EnvPicker from "../../Pickers/EnvPicker/index.jsx";
-import DartDropzone from "../../Form/DartDropzone/index.jsx";
+import DartDropzone from "../DartDropzone/index.jsx";
 import { useQuery } from "react-query";
 import Modal from "@mui/material/Modal";
 import { useMutation } from "react-query";

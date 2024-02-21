@@ -3,6 +3,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import Box from "@mui/material/Box";
 import Download from "./download.jsx";
 import Zoom from "./zoom.jsx";
+import { useTheme } from "@emotion/react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -14,42 +15,30 @@ const defaultstyle = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "100%",
+    height: "inherit",
   },
-  pdfouter: {
-    width: "90%",
-    display: "flex",
-    justifyContent: "center",
-    overflowY: "scroll",
-    overflowX: "hidden",
-    transition: "all 0.2s ease",
-    scrollbarWidth: "thin",
-    "&::-webkit-scrollbar": {
-      cursor: "auto",
-      width: "0.8em",
-    },
-    "&::-webkit-scrollbar-track": {
-      background: "grey",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      cursor: "pointer !important",
-      backgroundColor: "goldenrod",
-    },
-    "&::-webkit-scrollbar-thumb:hover": {
-      cursor: "pointer !important",
-      backgroundColor: "gold",
-    },
+  pdf: (theme) => {
+    return {
+      width: "90%",
+      display: "flex",
+      justifyContent: "center",
+      overflowY: "scroll",
+      overflowX: "hidden",
+      transition: "all 0.2s ease",
+      ...theme.scrollbar
+    };
   },
   controls: {
     padding: "1px",
     display: "flex",
   },
   download: {
-    marginLeft: "auto"
+    marginLeft: "auto",
   },
 };
 
 const PdfViewer = ({ blob, style = defaultstyle }) => {
+  const theme = useTheme();
   const [numPages, setNumPages] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1.2);
 
@@ -80,7 +69,7 @@ const PdfViewer = ({ blob, style = defaultstyle }) => {
   return (
     <>
       <Box sx={style.container}>
-        <Box sx={style.pdfouter}>
+        <Box sx={style.pdf(theme)}>
           <Document id="pdf" file={blob} onLoadSuccess={onDocumentLoadSuccess}>
             {mapPages()}
           </Document>

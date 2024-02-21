@@ -1,9 +1,11 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useState } from "react";
+import { useEnvironments } from "../../../hooks/useEnvironments";
 
 const styles = {
   innerContainer: {
     display: "flex",
+    alignItems: "center",
     gap: "10px",
   },
   slectedButton: {
@@ -25,22 +27,42 @@ const styles = {
   },
 };
 
-function EnvPicker({ envs, onSelected = (env) => {} }) {
+function EnvPicker({ onSelected = (env) => {} }) {
   const [selected, setSelected] = useState("");
+
+  const { data, isLoading, isError } = useEnvironments();
 
   function handleClick(env) {
     onSelected(env);
     setSelected(env);
   }
 
+  if (isLoading) {
+    return (
+      <Box sx={styles.innerContainer}>
+        <CircularProgress size={28} />
+      </Box>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Box sx={styles.innerContainer}>
+        <Typography sx={{color: "red"}}>Service Unavailable</Typography>
+      </Box>
+    );
+  }
+
+  const { environments } = data;
+
   return (
     <Box>
       <Box sx={styles.innerContainer}>
-        {envs.map((env, index) => (
-          <Box key={`cntnr-${index}`} sx={styles.button}>
+        {environments.map((env, index) => (
+          <Box key={`data-${index}`} sx={styles.button}>
             <Button
               sx={env === selected ? styles.slectedButton : styles.button}
-              key={index}
+              key={`data-btn-${index}`}
               variant="contained"
               onClick={() => handleClick(env)}
             >
