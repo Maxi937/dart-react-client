@@ -35,7 +35,7 @@ function DocumentModels({ onSelected = (document) => {} }) {
   const [search, setSearch] = useState("");
 
   const { data, error, isLoading } = useQuery("models", () =>
-    dartService.getXpressionDocumentModels("prd")
+    dartService.getXpressionDocumentModels("dev")
   );
 
   if (isLoading)

@@ -9,10 +9,10 @@ export const dartService = {
     return data;
   },
 
-  async generateXpression(env, code, files) {
+  async generateXpression(env, documentModelCode, file) {
     const { data } = await axios.post(
       "api/xpression",
-      { code: code, files: files, env: env },
+      { documentModelCode: documentModelCode, file: file, env: env },
       {
         headers: { "Content-Type": "multipart/form-data" },
       }

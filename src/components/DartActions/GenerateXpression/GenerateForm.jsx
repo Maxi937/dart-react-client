@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { dartService } from "../../../service/dart-service.js";
 import DocumentModelPicker from "../../Pickers/DocumentModelPicker";
 import EnvPicker from "../../Pickers/EnvPicker/index.jsx";
 import DartDropzone from "../../Form/DartDropzone";
+import { useMutation, useQueries } from "react-query";
+import FormLoadingOverlay from "./FormLoadingOverlay.jsx";
+import FormSuccessOverlay from "./FormSuccessOverlay.jsx";
+import DocumentResult from "./DocumentResult.jsx";
 
 const styles = {
   container: {
@@ -27,6 +31,12 @@ const styles = {
     padding: "50px",
     height: "40vh",
   },
+  results: {
+    display: "flex",
+    padding: "50px",
+    flexDirection: "column",
+    gap: "15px",
+  },
   submitButton: (canGenerate) => {
     return {
       fontWeight: "bold",
@@ -42,19 +52,52 @@ const styles = {
 };
 
 function GenerateForm() {
-  const [pdfFile, setpdfFile] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [files, setSelectedFiles] = useState([]);
   const [documentModel, setDocumentModel] = useState(null);
   const [canGenerate, setCanGenerate] = useState(false);
   const [env, setEnv] = useState("");
 
   useEffect(() => {
-    console.log(files);
+    console.log(formSubmit);
     if (files.length >= 1 && env && documentModel) {
       return setCanGenerate(true);
     }
     return setCanGenerate(false);
   });
+
+  // const formSubmit = useMutation(
+  //   async () =>
+  //     await Promise.all(
+  //       files.map(
+  //         async (file) =>
+  //           await dartService.generateXpression(env, documentModel.mdl_cd, file)
+  //       )
+  //     )
+  // );
+
+  const formSubmit = useQueries(
+    files.map((file) => {
+      return {
+        queryKey: ["file", file.path],
+        queryFn: () =>
+          dartService.generateXpression(env, documentModel.mdl_cd, file),
+        enabled: formSubmitted,
+      };
+    })
+  );
+
+  const formLoading = formSubmit.some((result) => result.isLoading || result.isSuccess);
+
+  //   const formSubmit = useMutation(
+  //   async () =>
+  //     await Promise.all(
+  //       files.map(
+  //         async (file) =>
+  //           await dartService.generateXpression(env, documentModel.mdl_cd, file)
+  //       )
+  //     )
+  // );
 
   function handleDrop(droppedFiles) {
     const result = [];
@@ -76,19 +119,15 @@ function GenerateForm() {
     setpdfFile();
   }
 
-  async function handleSubmit() {
+  function handleSubmit() {
     if (!files.length >= 1 || !documentModel || !env) {
       return console.log("all fields not completed");
     }
-    console.log(`generating ${env}\t${documentModel.mdl_cd}\t${files}}`)
-    const data = await dartService.generateXpression(env, documentModel.mdl_name, files);
+    setFormSubmitted(true);
 
-    if (data.success) {
-      console.log(data);
-      // const buf = Uint8Array.from(data.filedata.data);
-      // const file = new File([buf], data.filename, { type: "application/pdf" });
-      // setpdfFile(file);
-    }
+    // const buf = Uint8Array.from(data.filedata.data);
+    // const file = new File([buf], data.filename, { type: "application/pdf" });
+    // setpdfFile(file);
   }
 
   return (
@@ -106,12 +145,39 @@ function GenerateForm() {
         </Button>
       </Box>
 
-      <Box sx={styles.dropzone}>
-        <DartDropzone
-          acceptedFileTypes={{ "text/xml": [".xml"] }}
-          handleDrop={handleDrop}
-        />
-      </Box>
+      {formSubmitted ? (
+        <Box sx={styles.results}>
+          {formSubmit.map((result) => {
+            if (result.isSuccess) {
+              return <DocumentResult document={result.data.document} />;
+            }
+
+            if (result.isLoading) {
+              return (
+                <Box
+                  sx={{
+                    backgroundColor: "black",
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "10px"
+                  }}
+                >
+                  <CircularProgress></CircularProgress>
+                </Box>
+              );
+            }
+          })}
+        </Box>
+      ) : (
+        <Box sx={styles.dropzone}>
+          <DartDropzone
+            acceptedFileTypes={{ "text/xml": [".xml"] }}
+            handleDrop={handleDrop}
+          />
+        </Box>
+      )}
+
+      {/* <FormLoadingOverlay disabled={formSubmit.isLoading} /> */}
     </Box>
   );
 }
