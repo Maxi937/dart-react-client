@@ -3,13 +3,16 @@ import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import Chip from "@mui/material/Chip";
 import PdfViewer from "../PdfViewer";
 import { Modal } from "@mui/material";
+import { IconButton } from "@mui/material";
+import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const styles = {
   container: (theme) => {
     return {
+      filter: "brightness(65%)",
       display: "flex",
       alignItems: "center",
       gap: "25px",
@@ -19,7 +22,7 @@ const styles = {
       transition: "all 0.2s ease",
       border: "solid 1px black",
       "&:hover": {
-        color: theme.palette.primaryHighlight,
+        filter: "brightness(100%)",
         border: `solid 1px ${theme.palette.primaryHighlight}`,
       },
     };
@@ -31,16 +34,30 @@ const styles = {
   modeldsc: {
     paddingTop: "20px",
   },
-  chips: {
-    flex: 1,
-    justifyContent: "flex-end",
-    display: "flex",
-    gap: "10px",
+  postXIcon: {
+    filter: "brightness(65%)",
+    color: "royalblue",
+    transition: "all 0.2s ease",
+    "&:hover": {
+      filter: "brightness(155%)",
+    },
   },
-  chiplabel: {
-    fontSize: "11px",
-    fontWeight: "800",
-    textTransform: "uppercase",
+  pdfIcon: {
+    filter: "brightness(65%)",
+    color: "red",
+    transition: "all 0.2s ease",
+    "&:hover": {
+      filter: "brightness(155%)",
+    },
+  },
+  viewIcon: {
+    filter: "brightness(65%)",
+    color: "grey",
+    transition: "all 0.2s ease",
+    "&:hover": {
+      filter: "brightness(155%)",
+      color: "white",
+    },
   },
   modalContent: {
     position: "absolute",
@@ -60,7 +77,7 @@ function DocumentResult({ document }) {
   const theme = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
-  const blob = () => {
+  const pdfFile = () => {
     const buf = Uint8Array.from(document.pdfbytes.data);
     const file = new File([buf], document.filename, {
       type: "application/pdf",
@@ -70,25 +87,66 @@ function DocumentResult({ document }) {
 
   function handleClose() {
     setIsOpen(false);
-    console.log(isOpen);
   }
 
-  function handleClick() {
+  function handlePostXClick(e) {
+    e.stopPropagation();
+    const blob = new Blob([document.postx], {
+      type: "text/plain",
+    });
+
+    const blobUrl = window.URL.createObjectURL(blob);
+    const anchor = window.document.createElement("a");
+    anchor.download = String(document.filename).concat(".xml");
+    anchor.href = blobUrl;
+    anchor.click();
+    window.URL.revokeObjectURL(blobUrl);
+  }
+
+  function handlePdfClick(e) {
+    e.stopPropagation();
+    const blobUrl = window.URL.createObjectURL(pdfFile());
+    const anchor = window.document.createElement("a");
+    anchor.download = String(document.filename).concat(".pdf");
+    anchor.href = blobUrl;
+    anchor.click();
+    window.URL.revokeObjectURL(blobUrl);
+  }
+
+  function handleViewClick(e) {
+    e.stopPropagation();
     setIsOpen(true);
   }
 
   return (
-    <Paper sx={styles.container(theme)} onClick={handleClick}>
+    <Paper sx={styles.container(theme)}>
       <Box sx={styles.docInfo}>
         <Typography>{document.filename}</Typography>
       </Box>
       <Box sx={styles.chips}>
         {document.postx && (
-          <Chip
-            style={{ backgroundColor: "indigo" }}
-            label={<Typography sx={styles.chiplabel}>xquery</Typography>}
-          />
+          <IconButton
+            sx={styles.postXIcon}
+            aria-label="download postx"
+            onClick={handlePostXClick}
+          >
+            <SimCardDownloadIcon fontSize="large" />
+          </IconButton>
         )}
+        <IconButton
+          sx={styles.pdfIcon}
+          aria-label="download pdf"
+          onClick={handlePdfClick}
+        >
+          <SimCardDownloadIcon fontSize="large" />
+        </IconButton>
+        <IconButton
+          sx={styles.viewIcon}
+          aria-label="view"
+          onClick={handleViewClick}
+        >
+          <VisibilityIcon fontSize="large" />
+        </IconButton>
       </Box>
       <Modal
         open={isOpen}
@@ -97,7 +155,7 @@ function DocumentResult({ document }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={styles.modalContent}>
-          <PdfViewer blob={blob()} />
+          <PdfViewer blob={pdfFile()} />
         </Box>
       </Modal>
     </Paper>

@@ -25,8 +25,11 @@ const defaultstyle = {
       overflowY: "scroll",
       overflowX: "hidden",
       transition: "all 0.2s ease",
-      ...theme.scrollbar
+      ...theme.scrollbar,
     };
+  },
+  page: {
+    padding: "10px",
   },
   controls: {
     padding: "1px",
@@ -40,18 +43,18 @@ const defaultstyle = {
 const PdfViewer = ({ blob, style = defaultstyle }) => {
   const theme = useTheme();
   const [numPages, setNumPages] = useState(0);
-  const [zoomLevel, setZoomLevel] = useState(1.2);
+  const [zoomLevel, setZoomLevel] = useState(1.0);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
 
   function mapPages() {
-    console.log(numPages);
     const pages = [];
+
     for (let i = 1; i <= numPages; i++) {
       pages.push(
-        <>
+        <Box key={"container-" + i} sx={style.page}>
           <Page
             key={"page-" + i}
             scale={zoomLevel}
@@ -59,8 +62,7 @@ const PdfViewer = ({ blob, style = defaultstyle }) => {
             renderAnnotationLayer={false}
             renderTextLayer={false}
           />
-          <br></br>
-        </>
+        </Box>
       );
     }
     return pages;
