@@ -11,7 +11,7 @@ export function useXpressionDocuments(env, DocumentModelCode, files) {
         staleTime: Infinity,
         cacheTime: 0,
         refetchOnMount: false,
-        retry: false
+        retry: false,
       };
     })
   );

@@ -5,7 +5,7 @@ import DocumentModelPicker from "../../Pickers/DocumentModelPicker/index.jsx";
 import EnvPicker from "../../Pickers/EnvPicker/index.jsx";
 import DartDropzone from "../../Form/DartDropzone/index.jsx";
 import DocumentResults from "./DocumentResults.jsx";
-import { cancelXpressionDocumentsQuery } from "../../../hooks/useXpressionDocuments.jsx";
+import { cancelXpressionDocumentsQuery, useInvalidateXpressionDocuments } from "../../../hooks/useXpressionDocuments.jsx";
 
 const styles = {
   container: {
@@ -73,6 +73,7 @@ function GenerateForm() {
 
   if (cancelled) {
     cancelXpressionDocumentsQuery();
+    useInvalidateXpressionDocuments()
   }
 
   function handleDocumentModelChange(documentModel) {

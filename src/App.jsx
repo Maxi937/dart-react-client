@@ -12,8 +12,8 @@ const rootElement = createRoot(document.getElementById("root"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 360000,
-      refetchInterval: 360000,
+      staleTime: Infinity,
+      cacheTime: 1000 * 60 * 60, // 1 hour in ms
       refetchOnWindowFocus: false,
     },
   },

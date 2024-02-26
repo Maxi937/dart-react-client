@@ -69,12 +69,12 @@ function DocumentResult({ document }) {
   };
 
   function handleClose() {
-    setIsOpen(false)
-    console.log(isOpen)
+    setIsOpen(false);
+    console.log(isOpen);
   }
 
   function handleClick() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
 
   return (

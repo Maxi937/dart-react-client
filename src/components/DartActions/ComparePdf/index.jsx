@@ -4,6 +4,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import DartDropzone from "../../Form/DartDropzone/index.jsx";
 import CompareResult from "./CompareResult.jsx";
 import { cancelXpressionDocumentsQuery } from "../../../hooks/useXpressionDocuments.jsx";
+import { cancelComparesQuery, useInvalidateCompares } from "../../../hooks/useCompare.jsx";
 
 const styles = {
   container: {
@@ -24,10 +25,10 @@ const styles = {
     background: "black",
   },
   compareContainer: {
-	display: "flex"
+    display: "flex",
   },
   dropzone: {
-	flexGrow: 1,
+    flexGrow: 1,
     padding: "50px",
     height: "40vh",
   },
@@ -59,8 +60,6 @@ function CompareForm() {
   const [canGenerate, setCanGenerate] = useState(false);
 
   useEffect(() => {
-	console.log(baseline)
-	console.log(candidate)
     if (validate()) {
       return setCanGenerate(true);
     }
@@ -68,14 +67,15 @@ function CompareForm() {
   });
 
   function validate() {
-    if (candidate && baseline) {
+    if (candidate != null && baseline != null) {
       return true;
     }
     return false;
   }
 
   if (cancelled) {
-    // todo
+	cancelComparesQuery()
+    useInvalidateCompares()
   }
 
   function handleClear() {
@@ -117,14 +117,14 @@ function CompareForm() {
       </Box>
 
       {formSubmitted ? (
-        <CompareResult baseline={baseline} cadidate={candidate} />
+        <CompareResult baseline={baseline} candidate={candidate} />
       ) : (
         <Box sx={styles.compareContainer}>
           <Box sx={styles.dropzone}>
             <DartDropzone
               acceptedFileTypes={{ "application/pdf": [".pdf"] }}
               handleDrop={(droppedFiles) => setBaseline(droppedFiles[0])}
-			  singleFile = {true}
+              singleFile={true}
             />
           </Box>
 
@@ -132,7 +132,7 @@ function CompareForm() {
             <DartDropzone
               acceptedFileTypes={{ "application/pdf": [".pdf"] }}
               handleDrop={(droppedFiles) => setCandidate(droppedFiles[0])}
-			  singleFile = {true}
+              singleFile={true}
             />
           </Box>
         </Box>

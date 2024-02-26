@@ -6,6 +6,9 @@ seed
 .vscode
 
 package-lock.json
+.storybook
+src/stories/fixtures
+src/stories/fixtures/*
 
 # Logs
 logs

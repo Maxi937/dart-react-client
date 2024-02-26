@@ -22,8 +22,6 @@ const styles = {
 function DocumentResults({ env, documentModelCode, files }) {
   const documents = useXpressionDocuments(env, documentModelCode, files);
 
-  console.log(documents)
-
   return (
     <Box sx={styles.container}>
       {documents.map((result) => {
