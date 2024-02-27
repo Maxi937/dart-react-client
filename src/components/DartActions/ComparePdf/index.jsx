@@ -3,8 +3,10 @@ import Button from "@mui/material/Button";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import DartDropzone from "../../Form/DartDropzone/index.jsx";
 import CompareResult from "./CompareResult.jsx";
-import { cancelXpressionDocumentsQuery } from "../../../hooks/useXpressionDocuments.jsx";
-import { cancelComparesQuery, useInvalidateCompares } from "../../../hooks/useCompare.jsx";
+import {
+  cancelComparesQuery,
+  useInvalidateCompares,
+} from "../../../hooks/useCompare.jsx";
 
 const styles = {
   container: {
@@ -74,14 +76,14 @@ function CompareForm() {
   }
 
   if (cancelled) {
-	cancelComparesQuery()
-    useInvalidateCompares()
+    cancelComparesQuery();
+    useInvalidateCompares();
   }
 
   function handleClear() {
-    setCancelled(true);
     setCandidate(null);
     setBaseline(null);
+    setCancelled(true);
     setFormSubmitted(false);
   }
 
@@ -111,7 +113,7 @@ function CompareForm() {
             color="primary"
             sx={styles.submitButton(canGenerate)}
           >
-            Generate
+            Compare
           </Button>
         )}
       </Box>

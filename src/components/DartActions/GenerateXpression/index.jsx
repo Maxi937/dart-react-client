@@ -100,7 +100,7 @@ function GenerateForm() {
   return (
     <Box>
       <Box sx={styles.topBar}>
-        <EnvPicker envs={["dev", "qar", "prd"]} onSelected={handleEnvChange} />
+        <EnvPicker onSelected={handleEnvChange} />
         <DocumentModelPicker onSelected={handleDocumentModelChange} />
         {formSubmitted ? (
           <Button

@@ -5,7 +5,9 @@ export function useEnvironments() {
   return useQuery({
     queryKey: ["availableEnvironments"],
     queryFn: () => dartService.getEnvironments(),
-    staleTime: Infinity,
-    retry: false
+    staleTime: 36000,
+    cacheTime: 36000,
+    refetchOnMount: false,
+    retry: 2,
   });
 }

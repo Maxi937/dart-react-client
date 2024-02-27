@@ -31,8 +31,9 @@ const styles = {
     display: "flex",
     flexDirection: "column",
   },
-  modeldsc: {
-    paddingTop: "20px",
+  actionIcons: {
+    marginLeft: "auto",
+    display: "flex",
   },
   postXIcon: {
     filter: "brightness(65%)",
@@ -123,7 +124,7 @@ function DocumentResult({ document }) {
       <Box sx={styles.docInfo}>
         <Typography>{document.filename}</Typography>
       </Box>
-      <Box sx={styles.chips}>
+      <Box sx={styles.actionIcons}>
         {document.postx && (
           <IconButton
             sx={styles.postXIcon}

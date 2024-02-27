@@ -13,8 +13,11 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: Infinity,
-      cacheTime: 1000 * 60 * 60, // 1 hour in ms
+      cacheTime: 0, // 1 hour in ms
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      retry: false,
+      refetchOnReconnect: false
     },
   },
 });

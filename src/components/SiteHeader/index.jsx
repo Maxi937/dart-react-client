@@ -10,6 +10,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import BrandStyledTextFat from "../Text/BrandStyledTextFat";
 
 const styles = {
+  appBar: (theme) => {
+    return {
+      backgroundColor: "transparent",
+    };
+  },
   title: {
     flexGrow: 1,
   },
@@ -37,7 +42,7 @@ const SiteHeader = () => {
   return (
     <>
       <AppBar
-        sx={{ backgroundColor: "transparent" }}
+        sx={styles.appBar(theme)}
         position="fixed"
         elevation={0}
         color="primary"

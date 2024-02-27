@@ -1,11 +1,10 @@
 import React, { useContext, useState } from "react";
 import DocumentModel from "../../DocumentModel";
 import { Box, Typography } from "@mui/material";
-import { Stack } from "@mui/material";
-import { Input, InputLabel, TextField } from "@mui/material";
-import { dartService } from "../../../service/dart-service.js";
+import { TextField } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useQuery } from "react-query";
+import { useDocumentModels } from "../../../hooks/useDocumentModels.jsx";
+import { useTheme } from "@emotion/react";
 
 const styles = {
   container: {
@@ -24,18 +23,21 @@ const styles = {
       color: "white",
     },
   },
-  listcontainer: {
-    backgroundColor: "transparent",
-    overflow: "auto",
+  listcontainer: (theme) => {
+    return {
+      padding: "20px",
+      backgroundColor: "transparent",
+      overflow: "auto",
+      ...theme.scrollbar,
+    };
   },
 };
 
 function DocumentModels({ onSelected = (document) => {} }) {
   const [search, setSearch] = useState("");
+  const theme = useTheme();
 
-  const { data, error, isLoading } = useQuery("models", () =>
-    dartService.getXpressionDocumentModels("dev")
-  );
+  const { data, error, isLoading } = useDocumentModels("dev");
 
   if (isLoading)
     return (
@@ -76,7 +78,7 @@ function DocumentModels({ onSelected = (document) => {} }) {
         variant="outlined"
         onChange={(e) => setSearch(String(e.target.value).toLowerCase())}
       />
-      <Box sx={styles.listcontainer}>
+      <Box sx={styles.listcontainer(theme)}>
         {searchModels().map((model, index) => (
           <Box
             key={`cnter-${index}`}

@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import GeneratePage from "./pages/GeneratePage"
 import ComparePage from "./pages/ComparePage";
+import MonitorPage from "./pages/MonitorPage"
 
 function Router() {
   const location = useLocation();
@@ -11,6 +12,7 @@ function Router() {
       <Route path="/" element={<HomePage />} />
       <Route path="/generate" element={<GeneratePage />} />
       <Route path="/compare" element={<ComparePage />} />
+      <Route path="/monitor" element={<MonitorPage />} />
       {/* <Route path="/filenet" element={<FilenetPage />} />
       <Route path="/carryforward" element={<CarryForwardPage />} /> */}
     </Routes>

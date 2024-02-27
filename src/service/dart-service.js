@@ -31,12 +31,30 @@ export const dartService = {
     return data;
   },
 
-  async compare(candidate, baseline) {
+  async getDocGenStatus(env, startTime, endTime, signal = null) {
+    const { data } = await axios.get("api/docgen/monitor", {
+      params: {
+        env: String(env).toLowerCase(),
+        start: startTime,
+        end: endTime
+      },
+      signal,
+    });
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data
+  },
+
+  async compare(candidate, baseline, signal = null) {
     const { data } = await axios.post(
       "api/streamdiff",
       { candidate: candidate, baseline: baseline },
       {
         headers: { "Content-Type": "multipart/form-data" },
+        signal,
       }
     );
 
@@ -68,11 +86,28 @@ export const dartService = {
     return data;
   },
 
-  async getXpressionDocumentModels(env) {
+  async getXpressionDocumentModels(env, signal = null) {
     const { data } = await axios.get(`/api/xpression/models`, {
       params: {
         env: env,
       },
+      signal
+    });
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
+  async getRequestXmlForCorrelationId(env, correlationId, signal = null) {
+    const { data } = await axios.get(`/api/docgen/getrequestxml`, {
+      params: {
+        env: env,
+        correlationId: correlationId
+      },
+      signal
     });
 
     if (!data.success) {
