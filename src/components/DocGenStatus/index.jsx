@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useDocGenStatus } from "../../hooks/useDocGenStatus.jsx";
-import DocGenItem from "./DocGenItem.jsx";
+import DocGenItem from "../DocGenItem/index.jsx";
 import { jsDateToSqlDate } from "../../utils/format-utils.js";
 
 const styles = {};

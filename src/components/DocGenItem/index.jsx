@@ -4,8 +4,8 @@ import { Box, CircularProgress, Typography, Paper, Chip } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import moment from "moment";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { Modal } from "@mui/material";
-import DocGenItemModal from "./DocGenItemModal";
+import DartModal from "../Primitives/DartModal";
+import DocGenItemDetail from "../DocGenItemDetail";
 
 const styles = {
   container: (theme, status) => {
@@ -150,7 +150,9 @@ function DocGenItem({ docgenitem }) {
           />
         </Box>
       </Paper>
-      <DocGenItemModal docgenitem={docgenitem} isOpen={isOpen} handleClose={() => setIsOpen(false)} />
+      <DartModal isOpen={isOpen} handleClose={() => setIsOpen(false)}>
+        <DocGenItemDetail docgenitem={docgenitem} />
+      </DartModal>
     </>
   );
 }
