@@ -14,6 +14,26 @@ export const dartService = {
     return data;
   },
 
+  async getDocumentationTree(signal = null) {
+    const { data } = await axios.get("api/dart/documentation");
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
+  async getDocumentation(name, signal = null) {
+    const { data } = await axios.get(`api/dart/documentation/${name}`);
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
   async generateXpression(env, documentModelCode, file, signal = null) {
     const { data } = await axios.post(
       "api/xpression",
@@ -25,7 +45,7 @@ export const dartService = {
     );
 
     if (!data.success) {
-      throw new Error(data.document);
+      throw new Error(data.error);
     }
 
     return data;
@@ -36,7 +56,7 @@ export const dartService = {
       params: {
         env: String(env).toLowerCase(),
         start: startTime,
-        end: endTime
+        end: endTime,
       },
       signal,
     });
@@ -45,7 +65,7 @@ export const dartService = {
       throw new Error(data.error);
     }
 
-    return data
+    return data;
   },
 
   async compare(candidate, baseline, signal = null) {
@@ -91,7 +111,7 @@ export const dartService = {
       params: {
         env: env,
       },
-      signal
+      signal,
     });
 
     if (!data.success) {
@@ -105,9 +125,9 @@ export const dartService = {
     const { data } = await axios.get(`/api/docgen/getrequestxml`, {
       params: {
         env: env,
-        correlationId: correlationId
+        correlationId: correlationId,
       },
-      signal
+      signal,
     });
 
     if (!data.success) {

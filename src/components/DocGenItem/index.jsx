@@ -84,14 +84,9 @@ function DocGenItem({ docgenitem }) {
     }
   }
 
-  function handleInfoClick(e) {
-    e.stopPropagation();
-    setIsOpen(true);
-  }
-
   function handleClick(e) {
     e.stopPropagation();
-    window.open(docgenitem.FilenetURL, "_blank").focus();
+    setIsOpen(true);
   }
 
   return (
@@ -135,17 +130,6 @@ function DocGenItem({ docgenitem }) {
               <Typography sx={styles.chiplabel}>
                 {docgenitem.doc_gen_sys_cd}
               </Typography>
-            }
-          />
-          <Chip
-            onClick={handleInfoClick}
-            style={{
-              backgroundColor: "black",
-            }}
-            label={
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <InfoOutlinedIcon sx={styles.info(theme)} />
-              </Box>
             }
           />
         </Box>

@@ -77,7 +77,7 @@ function DocGenItemDetail({ docgenitem }) {
         <Content header={"User"} info={docgenitem.vers_act_user_id} />
       </Box>
       <Box sx={styles.actions}>
-        <ItemActions />
+        <ItemActions docgenitem={docgenitem}/>
       </Box>
     </Box>
   );

@@ -4,23 +4,25 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { useDocGenStatus } from "../../hooks/useDocGenStatus.jsx";
 import DocGenItem from "../DocGenItem/index.jsx";
 import { jsDateToSqlDate } from "../../utils/format-utils.js";
+import CenteredSpinner from "../Primitives/CenteredSpinner/index.jsx";
+import DartDatePicker from "../Form/DartDatePicker/index.jsx";
 
 const styles = {};
 
 function DocGenStatus({ env }) {
-  const date = new Date();
+  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(thisMorning());
 
-  const thisMorning = new Date(date);
-  thisMorning.setHours(0,0,0,0);
+  function thisMorning() {
+    const thisMorning = new Date(endDate);
+    thisMorning.setHours(0, 0, 0, 0);
+    return thisMorning;
+  }
 
-  const { data, isLoading, isError } = useDocGenStatus(
-    env,
-    jsDateToSqlDate(thisMorning),
-    jsDateToSqlDate(date)
-  );
+  const { data, isLoading, isError } = useDocGenStatus(env, startDate, endDate);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <CenteredSpinner />;
   }
 
   if (isError) {
@@ -28,11 +30,14 @@ function DocGenStatus({ env }) {
   }
 
   const { docgeninfo } = data;
-  console.log(docgeninfo)
+
   return (
     <Box>
-      {docgeninfo.map((result) => {
-        return <DocGenItem docgenitem={result} />;
+      <DartDatePicker />
+      {docgeninfo.map((result, index) => {
+        return (
+          <DocGenItem key={`${result.doc_id}-${index}`} docgenitem={result} />
+        );
       })}
     </Box>
   );

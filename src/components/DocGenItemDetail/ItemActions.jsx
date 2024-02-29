@@ -42,7 +42,6 @@ const styles = {
 
 function ItemActions({ docgenitem }) {
   async function downloadXml() {
-    const theme = useTheme();
     const env = String(docgenitem.Region).toLowerCase();
 
     const response = await dartService.getRequestXmlForCorrelationId(
@@ -64,6 +63,24 @@ function ItemActions({ docgenitem }) {
     }
   }
 
+  async function downloadPdf() {
+    const response = await fetch(docgenitem.FilenetURL);
+    if (response.status == 200) {
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const anchor = window.document.createElement("a");
+      anchor.download = String(docgenitem.doc_pkg_nm).concat(".pdf");
+      anchor.href = blobUrl;
+      anchor.click();
+      window.URL.revokeObjectURL(blobUrl);
+    }
+  }
+
+  async function openFilenet(e) {
+    e.stopPropagation();
+    window.open(docgenitem.FilenetURL, "_blank").focus();
+  }
+
   return (
     <Box sx={styles.actionIcons}>
       <IconButton
@@ -74,12 +91,24 @@ function ItemActions({ docgenitem }) {
         <SimCardDownloadIcon fontSize="large" />
       </IconButton>
 
-      <IconButton sx={styles.pdfIcon} aria-label="download pdf" onClick={{}}>
-        <SimCardDownloadIcon fontSize="large" />
-      </IconButton>
-      <IconButton sx={styles.viewIcon} aria-label="view" onClick={{}}>
-        <VisibilityIcon fontSize="large" />
-      </IconButton>
+      {docgenitem.stat_cd != "GENERROR" && (
+        <>
+          <IconButton
+            sx={styles.pdfIcon}
+            aria-label="download pdf"
+            onClick={downloadPdf}
+          >
+            <SimCardDownloadIcon fontSize="large" />
+          </IconButton>
+          <IconButton
+            sx={styles.viewIcon}
+            aria-label="view"
+            onClick={openFilenet}
+          >
+            <VisibilityIcon fontSize="large" />
+          </IconButton>
+        </>
+      )}
     </Box>
   );
 }
