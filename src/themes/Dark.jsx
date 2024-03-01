@@ -19,6 +19,7 @@ const Dark = createTheme({
     },
   },
   palette: {
+    accentColor: "red",
     primaryHighlight: "rgba(10,190,265,1)",
     primaryForeground: "black",
     primaryBackground: "#242424",

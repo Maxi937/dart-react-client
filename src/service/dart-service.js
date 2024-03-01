@@ -51,12 +51,10 @@ export const dartService = {
     return data;
   },
 
-  async getDocGenStatus(env, startTime, endTime, signal = null) {
+  async getDocGenStatus(query, signal = null) {
     const { data } = await axios.get("api/docgen/monitor", {
       params: {
-        env: String(env).toLowerCase(),
-        start: startTime,
-        end: endTime,
+        ...query
       },
       signal,
     });

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import moment from "moment"
 
 const styles = {
   picker: {
@@ -19,14 +19,21 @@ const styles = {
   },
 };
 
-export default function DartDatePicker({ value, setValue }) {
+export default function DartDatePicker({ label, value, setValue }) {
   return (
     <MobileDatePicker
       sx={styles.picker}
-      label="Mobile variant"
-      value={value}
-      onChange={(newValue) => setValue(newValue)}
+      label={label}
+      value={moment(value)}
+      onChange={(newValue) => setValue(new Date(newValue))}
       slotProps={{
+        dialog: {
+          sx: {
+            "& .MuiDialogContent-root": { 
+              color: "black" 
+            },
+          },
+        },
         day: {
           sx: {
             "&.MuiPickersDay-root": {

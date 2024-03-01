@@ -139,7 +139,7 @@ const MDropzone = ({ handleDrop, acceptedFileTypes, singleFile=false }) => {
         <Box sx={styles.iconContainer}>{icon}</Box>
         <Box sx={styles.fileListContainer}>
           <IconButton aria-label="fileList" onClick={handleFolderClick}>
-            {files.length >= 1 ? (
+            {files?.length >= 1 ? (
               <FolderIcon sx={styles.folderIcon(theme)} />
             ) : (
               <FolderOutlinedIcon sx={styles.folderIcon(theme)} />

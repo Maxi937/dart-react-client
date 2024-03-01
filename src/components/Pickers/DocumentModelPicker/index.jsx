@@ -9,8 +9,6 @@ import DocumentModels from "../../Pickers/DocumentModelPicker/DocumentPicker.jsx
 const styles = {
   container: {
     flexGrow: 1,
-    background: "black",
-    borderRadius: "20px",
     display: "flex",
     alignItems: "center",
   },
@@ -39,7 +37,7 @@ const styles = {
   },
 };
 
-function DocumentModelPicker({ onSelected = (documentModel) => {} }) {
+function DocumentModelPicker({ placeholder, onSelected = (documentModel) => {} }) {
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -60,12 +58,12 @@ function DocumentModelPicker({ onSelected = (documentModel) => {} }) {
   return (
     <Box sx={styles.container}>
       {selected ? (
-        <Typography sx={{ padding: "0px 20px" }}>
+        <Typography>
           {selected.mdl_nm}
         </Typography>
       ) : (
-        <Typography sx={{ padding: "0px 20px", color: "grey" }}>
-          Document Code
+        <Typography color={"grey"}>
+          {placeholder}
         </Typography>
       )}
       <Box sx={styles.iconContainer}>

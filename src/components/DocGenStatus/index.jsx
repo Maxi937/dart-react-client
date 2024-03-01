@@ -1,44 +1,49 @@
 import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import { Box, CircularProgress, Typography } from "@mui/material";
-import { useDocGenStatus } from "../../hooks/useDocGenStatus.jsx";
-import DocGenItem from "../DocGenItem/index.jsx";
-import { jsDateToSqlDate } from "../../utils/format-utils.js";
-import CenteredSpinner from "../Primitives/CenteredSpinner/index.jsx";
-import DartDatePicker from "../Form/DartDatePicker/index.jsx";
+import { Box, CircularProgress, Typography, Button } from "@mui/material";
+import SearchDocGen from "./SearchDocGen.jsx";
+import SearchForm from "../DocGenSearch";
+import DartModal from "../Primitives/DartModal/index.jsx";
+import EnvPicker from "../Pickers/EnvPicker/index.jsx";
 
 const styles = {};
 
-function DocGenStatus({ env }) {
-  const [endDate, setEndDate] = useState(new Date());
-  const [startDate, setStartDate] = useState(thisMorning());
+function DocGenStatus() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [query, setQuery] = useState({
+    env: "dev",
+    startDate: new Date(),
+    endDate: new Date(),
+  });
 
   function thisMorning() {
-    const thisMorning = new Date(endDate);
+    const thisMorning = new Date();
     thisMorning.setHours(0, 0, 0, 0);
     return thisMorning;
   }
 
-  const { data, isLoading, isError } = useDocGenStatus(env, startDate, endDate);
+  function updateQuery(property) {
+    const { name, value } = property;
 
-  if (isLoading) {
-    return <CenteredSpinner />;
+    setQuery({
+      ...query,
+      [name]: value,
+    });
   }
-
-  if (isError) {
-    return <Typography>Error</Typography>;
-  }
-
-  const { docgeninfo } = data;
 
   return (
     <Box>
-      <DartDatePicker />
-      {docgeninfo.map((result, index) => {
-        return (
-          <DocGenItem key={`${result.doc_id}-${index}`} docgenitem={result} />
-        );
-      })}
+      <Box sx={{ display: "flex" }}>
+        <EnvPicker
+          onSelected={(env) => updateQuery({ name: "env", value: env })}
+        />
+        <Button onClick={() => setIsOpen(true)}>Search</Button>
+      </Box>
+
+      <SearchDocGen query={query} />
+      <DartModal isOpen={isOpen} handleClose={() => setIsOpen(false)}>
+        <SearchForm query={query} setQuery={setQuery} />
+      </DartModal>
     </Box>
   );
 }

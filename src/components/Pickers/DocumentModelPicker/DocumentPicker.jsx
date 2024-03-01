@@ -37,7 +37,7 @@ function DocumentModels({ onSelected = (document) => {} }) {
   const [search, setSearch] = useState("");
   const theme = useTheme();
 
-  const { data, error, isLoading } = useDocumentModels("dev");
+  const { data, isError, error, isLoading } = useDocumentModels("dev");
 
   if (isLoading)
     return (
@@ -48,13 +48,13 @@ function DocumentModels({ onSelected = (document) => {} }) {
       </Box>
     );
 
-  if (error || !data.success)
+  if (isError)
     return (
       <Box
         sx={{ display: "flex", height: "inherit", justifyContent: "center" }}
       >
         <Typography sx={{ color: "red", alignSelf: "center" }}>
-          {error?.message}
+          Service unavailable
         </Typography>
       </Box>
     );

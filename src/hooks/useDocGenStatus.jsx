@@ -1,15 +1,17 @@
 import { useQuery, useQueries, useQueryClient } from "react-query";
 import { dartService } from "../service/dart-service";
 
-export function useDocGenStatus(env, startTime, endTime) {
+export function useDocGenStatus(query) {
+  console.log("getting doc gen status");
+  console.log(query);
   return useQuery({
-    queryKey: ["docgenstatus", env],
-    queryFn: ({ signal }) => dartService.getDocGenStatus(env, startTime, endTime, signal),
-    staleTime: Infinity,
+    queryKey: ["docgenstatus", query],
+    queryFn: ({ signal }) => dartService.getDocGenStatus(query, signal),
+    staleTime: 0,
     cacheTime: 0,
     refetchOnMount: false,
     refetchOnReconnect: false,
-    refetchOnWindowFocus: "false",
+    refetchOnWindowFocus: false,
     retry: false,
   });
 }

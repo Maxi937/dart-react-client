@@ -5,7 +5,10 @@ import DocumentModelPicker from "../../Pickers/DocumentModelPicker/index.jsx";
 import EnvPicker from "../../Pickers/EnvPicker/index.jsx";
 import DartDropzone from "../../Form/DartDropzone/index.jsx";
 import DocumentResults from "./DocumentResults.jsx";
-import { cancelXpressionDocumentsQuery, useInvalidateXpressionDocuments } from "../../../hooks/useXpressionDocuments.jsx";
+import {
+  cancelXpressionDocumentsQuery,
+  useInvalidateXpressionDocuments,
+} from "../../../hooks/useXpressionDocuments.jsx";
 
 const styles = {
   container: {
@@ -19,6 +22,7 @@ const styles = {
   },
   modelContainer: {
     borderRadius: "20px",
+    paddingLeft: "20px",
     flex: 1,
     display: "flex",
     alignItems: "center",
@@ -57,7 +61,7 @@ function GenerateForm() {
   const [env, setEnv] = useState("");
 
   useEffect(() => {
-    if (files.length >= 1 && env && documentModel) {
+    if (files?.length >= 1 && env && documentModel) {
       return setCanGenerate(true);
     }
     return setCanGenerate(false);
@@ -73,7 +77,7 @@ function GenerateForm() {
 
   if (cancelled) {
     cancelXpressionDocumentsQuery();
-    useInvalidateXpressionDocuments()
+    useInvalidateXpressionDocuments();
   }
 
   function handleDocumentModelChange(documentModel) {
@@ -101,7 +105,11 @@ function GenerateForm() {
     <Box>
       <Box sx={styles.topBar}>
         <EnvPicker onSelected={handleEnvChange} />
-        <DocumentModelPicker onSelected={handleDocumentModelChange} />
+
+        <Box sx={styles.modelContainer}>
+          <DocumentModelPicker placeholder={"Document Model"} onSelected={handleDocumentModelChange} />
+        </Box>
+
         {formSubmitted ? (
           <Button
             onClick={handleClear}

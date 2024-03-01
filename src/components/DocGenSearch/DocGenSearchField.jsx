@@ -9,19 +9,19 @@ const styles = {
   info: {
     backgroundColor: "black",
     padding: "10px",
-    borderRadius: "10px"
-  }
+    borderRadius: "10px",
+  },
 };
 
-function Content({ header, info }) {
+function SearchField({ header, children }) {
   const theme = useTheme();
 
   return (
-    <Box>
+    <Box sx={styles.info}>
       <Typography sx={styles.header(theme)}>{header}</Typography>
-      <Typography sx={styles.info}>{info}</Typography>
+      <Box>{children}</Box>
     </Box>
   );
 }
 
-export default Content;
+export default SearchField;

@@ -4,12 +4,11 @@ import PageTemplate from "../components/PageTemplate";
 import EnvPicker from "../components/Pickers/EnvPicker";
 
 const MonitorPage = (props) => {
-  const [env, setEnv] = useState("");
+  
 
   return (
     <PageTemplate>
-      <EnvPicker onSelected={(env) => setEnv(env)} />
-      {env && <DocGenStatus env={env} />}
+      <DocGenStatus/>
     </PageTemplate>
   );
 };
