@@ -52,18 +52,23 @@ const styles = {
     fontWeight: "700",
     boxShadow: "24px",
     "&:hover": {
-      backgroundColor: theme.palette.primaryHighlight
-    }
-  })
+      backgroundColor: theme.palette.primaryHighlight,
+    },
+  }),
 };
 
-function SearchDocGenForm({ query, setQuery }) {
-  const theme = useTheme()
+function SearchDocGenForm({ handleSearch = (query) => {} }) {
+  const defaultValues = {
+    startDate: new Date(),
+    endDate: new Date(),
+    code: "",
+    env: "",
+    correlationId: "",
+    filenetId: "",
+  };
 
-  useEffect(() => {
-    // Update the document title using the browser API
-    console.log(query);
-  });
+  const theme = useTheme();
+  const [query, setQuery] = useState(defaultValues);
 
   function thisMorning() {
     const thisMorning = new Date();
@@ -71,8 +76,8 @@ function SearchDocGenForm({ query, setQuery }) {
     return thisMorning;
   }
 
-  function handleSearch(e) {
-    e.preventDefault();
+  function handleSearchClick() {
+    handleSearch(query);
   }
 
   function updateQuery(property) {
@@ -123,6 +128,24 @@ function SearchDocGenForm({ query, setQuery }) {
           />
         </SearchField>
 
+        <SearchField header={"Case ID"}>
+          <DartTextField
+            value={query.caseId}
+            onSetValue={(value) =>
+              updateQuery({ name: "caseId", value: value })
+            }
+          />
+        </SearchField>
+
+        <SearchField header={"Status"}>
+          <DartTextField
+            value={query.status}
+            onSetValue={(value) =>
+              updateQuery({ name: "status", value: value })
+            }
+          />
+        </SearchField>
+
         <SearchField header={"Correlation ID"}>
           <DartTextField
             value={query.correlationId}
@@ -143,7 +166,9 @@ function SearchDocGenForm({ query, setQuery }) {
       </Box>
 
       <Box sx={styles.actions}>
-        <Button sx={styles.searchButton(theme)} onClick={handleSearch}>Search</Button>
+        <Button sx={styles.searchButton(theme)} onClick={handleSearchClick}>
+          Search
+        </Button>
       </Box>
     </Box>
   );

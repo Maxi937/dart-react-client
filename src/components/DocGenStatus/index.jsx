@@ -42,7 +42,12 @@ function DocGenStatus() {
 
       <SearchDocGen query={query} />
       <DartModal isOpen={isOpen} handleClose={() => setIsOpen(false)}>
-        <SearchForm query={query} setQuery={setQuery} />
+        <SearchForm
+          handleSearch={(query) => {
+            setIsOpen(false)
+            setQuery(query);
+          }}
+        />
       </DartModal>
     </Box>
   );

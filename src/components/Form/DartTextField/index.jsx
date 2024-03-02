@@ -35,9 +35,6 @@ export default function DartTextField({
         id="standard-basic"
         variant="standard"
         placeholder={placeholder}
-        InputProps={{
-          className: styles.field(theme),
-        }}
       />
     </Box>
   );
