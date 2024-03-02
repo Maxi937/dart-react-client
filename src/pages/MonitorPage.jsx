@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import DocGenStatus from "../components/DocGenStatus";
+import DocGenStatus from "../components/DocGen/DocGenStatus";
 import PageTemplate from "../components/PageTemplate";
-import EnvPicker from "../components/Pickers/EnvPicker";
 
 const MonitorPage = (props) => {
   

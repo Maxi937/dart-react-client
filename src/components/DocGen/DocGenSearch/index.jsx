@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import DartDatePicker from "../Form/DartDatePicker/index.jsx";
-import EnvPicker from "../Pickers/EnvPicker/index.jsx";
-import SearchField from "./DocGenSearchField.jsx";
-import DartTextField from "../Form/DartTextField/index.jsx";
-import DocumentModelPicker from "../Pickers/DocumentModelPicker";
+import DartDatePicker from "../../Form/DartDatePicker";
+import EnvPicker from "../../Pickers/EnvPicker";
+import SearchField from "../../Primitives/DartFormFieldWithHeader";
+import DartTextField from "../../Form/DartTextField";
+import DocumentModelPicker from "../../Pickers/DocumentModelPicker";
 import { useTheme } from "@emotion/react";
+import moment from "moment"
 
 const styles = {
   container: (theme) => ({
@@ -59,8 +60,8 @@ const styles = {
 
 function SearchDocGenForm({ handleSearch = (query) => {} }) {
   const defaultValues = {
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: moment().toISOString(),
+    endDate: moment().toISOString(),
     code: "",
     env: "",
     correlationId: "",
@@ -69,12 +70,6 @@ function SearchDocGenForm({ handleSearch = (query) => {} }) {
 
   const theme = useTheme();
   const [query, setQuery] = useState(defaultValues);
-
-  function thisMorning() {
-    const thisMorning = new Date();
-    thisMorning.setHours(0, 0, 0, 0);
-    return thisMorning;
-  }
 
   function handleSearchClick() {
     handleSearch(query);

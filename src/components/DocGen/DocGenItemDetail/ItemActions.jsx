@@ -4,7 +4,7 @@ import { useTheme } from "@emotion/react";
 import { IconButton } from "@mui/material";
 import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { dartService } from "../../service/dart-service";
+import { dartService } from "../../../service/dart-service";
 
 const styles = {
   actionIcons: {

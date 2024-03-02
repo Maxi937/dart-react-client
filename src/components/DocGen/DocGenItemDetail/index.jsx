@@ -7,7 +7,7 @@ import { Modal } from "@mui/material";
 import { IconButton } from "@mui/material";
 import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { dartService } from "../../service/dart-service";
+import { dartService } from "../../../service/dart-service";
 import Content from "./ItemDetailContent";
 import ItemActions from "./ItemActions";
 
@@ -28,7 +28,7 @@ const styles = {
     "& > p": {
       padding: "10px",
       fontSize: "13px",
-	  fontWeight: "600",
+      fontWeight: "600",
       justifySelf: "center",
     },
   }),
@@ -77,7 +77,7 @@ function DocGenItemDetail({ docgenitem }) {
         <Content header={"User"} info={docgenitem.vers_act_user_id} />
       </Box>
       <Box sx={styles.actions}>
-        <ItemActions docgenitem={docgenitem}/>
+        <ItemActions docgenitem={docgenitem} />
       </Box>
     </Box>
   );

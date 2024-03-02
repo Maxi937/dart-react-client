@@ -9,7 +9,7 @@ export default function DartDatePicker({ label, value, setValue }) {
     <MobileDatePicker
       label={label}
       value={moment(value)}
-      onChange={(newValue) => setValue(new Date(newValue))}
+      onChange={(newValue) => setValue(moment(newValue).toISOString())}
       slotProps={{
         dialog: {
           sx: {

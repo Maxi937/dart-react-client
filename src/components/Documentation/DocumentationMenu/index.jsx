@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import DocumentationCategory from "./DocumentationCategory";
-import Documentation from "../Documentation";
+import MarkdownDocumentation from "../MarkdownDocumentation";
 import SearchDocuments from "./SearchDocuments";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
@@ -73,7 +72,7 @@ export default function DocumentationMenu({ documentationTree }) {
       </Drawer>
       <Box component="main" sx={styles.documentationContainer}>
         {selectedDocument ? (
-          <Documentation document={selectedDocument} />
+          <MarkdownDocumentation document={selectedDocument} />
         ) : (
           <SearchDocuments
             documentationTree={documentationTree}

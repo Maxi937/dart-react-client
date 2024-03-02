@@ -4,8 +4,9 @@ import { Box, CircularProgress, Typography, Paper, Chip } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import moment from "moment";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import DartModal from "../Primitives/DartModal";
+import DartModal from "../../Primitives/DartModal";
 import DocGenItemDetail from "../DocGenItemDetail";
+import RegionChip from "../../RegionChip";
 
 const styles = {
   container: (theme, status) => {
@@ -27,7 +28,6 @@ const styles = {
       },
     };
   },
-  outerContainer: {},
   timestamp: {
     display: "flex",
     flexDirection: "column",
@@ -55,7 +55,7 @@ const styles = {
     textOverflow: "ellipsis",
   },
   chips: {
-    flex: 1,
+
     justifyContent: "flex-end",
     display: "flex",
     gap: "10px",
@@ -70,19 +70,6 @@ const styles = {
 function DocGenItem({ docgenitem }) {
   const [isOpen, setIsOpen] = useState(false);
   const theme = useTheme();
-
-  function docgenTypeColor(docgentype) {
-    switch (docgentype) {
-      case "xpresion":
-        return "dodgerblue";
-      case "istream":
-        return "lightseagreen";
-      case "pdfcompo":
-        return "crimson";
-      default:
-        return "grey";
-    }
-  }
 
   function handleClick(e) {
     e.stopPropagation();
@@ -122,16 +109,7 @@ function DocGenItem({ docgenitem }) {
               </Typography>
             }
           />
-          <Chip
-            style={{
-              backgroundColor: docgenTypeColor(docgenitem.doc_gen_sys_cd),
-            }}
-            label={
-              <Typography sx={styles.chiplabel}>
-                {docgenitem.doc_gen_sys_cd}
-              </Typography>
-            }
-          />
+          <RegionChip region={docgenitem.Region} />
         </Box>
       </Paper>
       <DartModal isOpen={isOpen} handleClose={() => setIsOpen(false)}>

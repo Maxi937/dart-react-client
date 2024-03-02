@@ -13,10 +13,11 @@ const styles = {
   appBar: (theme) => {
     return {
       backgroundColor: "transparent",
+      marginBottom: "50px"
     };
   },
   title: {
-    flexGrow: 1,
+    flex: "1"
   },
 };
 
@@ -25,9 +26,7 @@ const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 const SiteHeader = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   let menuOptions = [{ label: "Home", path: "/" }];
 
@@ -51,8 +50,7 @@ const SiteHeader = () => {
           <Box sx={styles.title}>
             <BrandStyledTextFat text={"DART"} />
           </Box>
-
-          <>
+          <Box>
             {menuOptions.map((opt) => (
               <Button
                 key={opt.label}
@@ -62,8 +60,7 @@ const SiteHeader = () => {
                 {opt.label}
               </Button>
             ))}
-            {/* <LoginLogoutButton /> */}
-          </>
+          </Box>
         </Toolbar>
       </AppBar>
       <Offset />
