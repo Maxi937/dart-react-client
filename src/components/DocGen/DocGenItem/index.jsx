@@ -6,7 +6,7 @@ import moment from "moment";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import DartModal from "../../Primitives/DartModal";
 import DocGenItemDetail from "../DocGenItemDetail";
-import RegionChip from "../../RegionChip";
+import RegionChip from "../../Primitives/RegionChip";
 
 const styles = {
   container: (theme, status) => {
@@ -70,6 +70,7 @@ const styles = {
 function DocGenItem({ docgenitem }) {
   const [isOpen, setIsOpen] = useState(false);
   const theme = useTheme();
+  console.log(docgenitem)
 
   function handleClick(e) {
     e.stopPropagation();

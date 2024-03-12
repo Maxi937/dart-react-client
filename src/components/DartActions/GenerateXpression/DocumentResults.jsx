@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import DocumentResult from "../../XpressionDocument/index.jsx";
-import { useXpressionDocuments } from "../../../hooks/useXpressionDocuments.jsx";
+import DocumentResult from "../../XpressionDocument";
+import { useXpressionDocuments } from "../../../hooks/useXpressionDocuments";
 
 const styles = {
   container: {

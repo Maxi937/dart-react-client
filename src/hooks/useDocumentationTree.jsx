@@ -6,7 +6,7 @@ export function useDocumentationTree() {
     queryKey: ["documentationTree"],
     queryFn: ({ signal }) => dartService.getDocumentationTree(signal),
     staleTime: Infinity,
-    cacheTime: 0,
+    cacheTime: Infinity,
     refetchOnMount: false,
     retry: false,
   });

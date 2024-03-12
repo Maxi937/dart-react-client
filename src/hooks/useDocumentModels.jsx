@@ -4,20 +4,30 @@ import { dartService } from "../service/dart-service";
 export function useDocumentModels(env) {
   return useQuery({
     queryKey: ["documentModels", env],
-    queryFn: ({ signal }) => dartService.getXpressionDocumentModels(env, signal),
-    staleTime: 36000,
-    cacheTime: 36000,
+    queryFn: ({ signal }) =>
+      dartService.getXpressionDocumentModels(env, signal),
+    staleTime: 5 * 60 * 60 * 1000,
+    cacheTime: 5 * 60 * 60 * 1000,
     refetchOnMount: false,
     retry: 2,
   });
 }
 
 export function useAllDocumentModels(envs) {
-  return useQueries(
+  const result = useQueries(
     envs.map((env) => {
-      useDocumentModels(env);
+      return {
+        queryKey: ["documentModels", "env", env],
+        queryFn: ({ signal }) =>
+          dartService.getXpressionDocumentModels(env, signal),
+        staleTime: Infinity,
+        cacheTime: 0,
+        refetchOnMount: false,
+        retry: false,
+      };
     })
   );
+  return result;
 }
 
 export function useInvalidateDocumentModels() {

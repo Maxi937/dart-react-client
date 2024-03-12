@@ -37,7 +37,7 @@ function DocumentModels({ onSelected = (document) => {} }) {
   const [search, setSearch] = useState("");
   const theme = useTheme();
 
-  const { data, isError, error, isLoading } = useDocumentModels("dev");
+  const { data, isError, error, isLoading } = useDocumentModels("qar");
 
   if (isLoading)
     return (

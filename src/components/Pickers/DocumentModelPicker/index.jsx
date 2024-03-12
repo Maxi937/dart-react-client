@@ -8,6 +8,9 @@ import DocumentModels from "../../Pickers/DocumentModelPicker/DocumentPicker.jsx
 
 const styles = {
   container: {
+    background: "black",
+    borderRadius: "20px",
+    paddingLeft: "20px",
     flexGrow: 1,
     display: "flex",
     alignItems: "center",

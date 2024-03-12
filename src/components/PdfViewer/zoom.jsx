@@ -23,7 +23,7 @@ const styles = {
 
 const Zoom = ({ zoomLevel, setZoomLevel }) => {
   function handleZoomIn() {
-    if (zoomLevel <= 2.0) {
+    if (zoomLevel <= 1.0) {
       setZoomLevel(zoomLevel + 0.2);
     }
   }

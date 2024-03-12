@@ -4,8 +4,30 @@ import { registerAxiosResponseHandler } from "../utils/service-utils.js";
 registerAxiosResponseHandler(axios);
 
 export const dartService = {
+  async analyseBdt(documentModelCode, signal = null) {
+    const { data } = await axios.get(`/api/dart/bdt/${documentModelCode}`, {
+      signal: signal,
+    });
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
+  async getNotifcations() {
+    const { data } = await axios.get("/api/dart/notifications");
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
   async getEnvironments() {
-    const { data } = await axios.get("api/dart/environments");
+    const { data } = await axios.get("/api/dart/environments");
 
     if (!data.success) {
       throw new Error(data.error);
@@ -15,7 +37,17 @@ export const dartService = {
   },
 
   async getDocumentationTree(signal = null) {
-    const { data } = await axios.get("api/dart/documentation");
+    const { data } = await axios.get("/api/dart/documentation");
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
+  async getBaselineTree(signal = null) {
+    const { data } = await axios.get("/api/dart/baseline");
 
     if (!data.success) {
       throw new Error(data.error);
@@ -25,7 +57,7 @@ export const dartService = {
   },
 
   async getDocumentation(name, signal = null) {
-    const { data } = await axios.get(`api/dart/documentation/${name}`);
+    const { data } = await axios.get(`/api/dart/documentation/${name}`);
 
     if (!data.success) {
       throw new Error(data.error);
@@ -34,9 +66,26 @@ export const dartService = {
     return data;
   },
 
+  async generateBaseline(env, documentModelCode, name, signal = null) {
+    const { data } = await axios.post(
+      "/api/dart/baseline",
+      { env: env, code: documentModelCode, path: name },
+      {
+        signal,
+      }
+    );
+
+    if (!data.success) {
+      console.log(data);
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
   async generateXpression(env, documentModelCode, file, signal = null) {
     const { data } = await axios.post(
-      "api/xpression",
+      "/api/xpression",
       { documentModelCode: documentModelCode, file: file, env: env },
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -52,9 +101,9 @@ export const dartService = {
   },
 
   async getDocGenStatus(query, signal = null) {
-    const { data } = await axios.get("api/docgen/monitor", {
+    const { data } = await axios.get("/api/docgen/monitor", {
       params: {
-        ...query
+        ...query,
       },
       signal,
     });
@@ -68,7 +117,7 @@ export const dartService = {
 
   async compare(candidate, baseline, signal = null) {
     const { data } = await axios.post(
-      "api/streamdiff",
+      "/api/streamdiff",
       { candidate: candidate, baseline: baseline },
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -84,12 +133,14 @@ export const dartService = {
   },
 
   async getFilenetPdf(filenet, env) {
-    const { data } = await axios.post(`api/xpression/${filenet}`, { env: env });
+    const { data } = await axios.post(`/api/xpression/${filenet}`, {
+      env: env,
+    });
     return data;
   },
 
   async getXDocumentFromFilenet(env, code, filenet) {
-    const { data } = await axios.post(`api/xpression/xdocument/${filenet}`, {
+    const { data } = await axios.post(`/api/xpression/xdocument/${filenet}`, {
       env: env,
       code: code,
     });
@@ -97,7 +148,7 @@ export const dartService = {
   },
 
   async compareCustomisedAgainstOriginal(env, code, filenet) {
-    const { data } = await axios.post(`api/streamdiff/${filenet}`, {
+    const { data } = await axios.post(`/api/streamdiff/${filenet}`, {
       env: env,
       code: code,
     });

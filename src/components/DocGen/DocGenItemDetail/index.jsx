@@ -3,11 +3,6 @@ import Button from "@mui/material/Button";
 import { Box, CircularProgress, Typography, Paper, Chip } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import moment from "moment";
-import { Modal } from "@mui/material";
-import { IconButton } from "@mui/material";
-import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import { dartService } from "../../../service/dart-service";
 import Content from "./ItemDetailContent";
 import ItemActions from "./ItemActions";
 

@@ -1,9 +1,14 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import GeneratePage from "./pages/GeneratePage"
-import ComparePage from "./pages/ComparePage";
-import MonitorPage from "./pages/MonitorPage"
-import DocumentationPage from "./pages/DocumentationPage"
+import HomePage from "./pages/Home";
+import GeneratePage from "./pages/Generate";
+import GenerateXpressionPage from "./pages/Generate";
+
+import MonitorPage from "./pages/MonitorPage";
+import DocumentationPage from "./pages/DocumentationPage";
+import TestingPage from "./pages/Test";
+import ReportPage from "./pages/Test/ReportPage";
+import ComparePage from "./pages/Test/ComparePage";
+import BdtPage from "./pages/Test/BdtPage";
 
 function Router() {
   const location = useLocation();
@@ -12,9 +17,13 @@ function Router() {
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<HomePage />} />
       <Route path="/generate" element={<GeneratePage />} />
-      <Route path="/compare" element={<ComparePage />} />
+
       <Route path="/monitor" element={<MonitorPage />} />
       <Route path="/documentation" element={<DocumentationPage />} />
+      <Route path="/test" element={<TestingPage />} />
+      <Route path="/test/bdt" element={<BdtPage />} />
+      <Route path="/reports" element={<ReportPage />} />
+      <Route path="/compare" element={<ComparePage />} />
       {/* <Route path="/filenet" element={<FilenetPage />} />
       <Route path="/carryforward" element={<CarryForwardPage />} /> */}
     </Routes>

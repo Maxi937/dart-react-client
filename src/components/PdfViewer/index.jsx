@@ -4,6 +4,9 @@ import Box from "@mui/material/Box";
 import Download from "./download.jsx";
 import Zoom from "./zoom.jsx";
 import { useTheme } from "@emotion/react";
+import "react-pdf/dist/esm/Page/TextLayer.css";
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -11,33 +14,28 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 const defaultstyle = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  container: (theme) => ({
+    border: `1px solid ${theme.palette.primaryHighlight}`,
     height: "inherit",
-  },
-  pdf: (theme) => {
-    return {
-      width: "90%",
-      display: "flex",
-      justifyContent: "center",
-      overflowY: "scroll",
-      overflowX: "hidden",
-      transition: "all 0.2s ease",
-      ...theme.scrollbar,
-    };
-  },
-  page: {
-    padding: "10px",
-  },
-  controls: {
-    padding: "1px",
     display: "flex",
+    justifyContent: "center",
+    overflowY: "scroll",
+    overflowX: "hidden",
+    ...theme.scrollbar,
+  }),
+  page: {
+    margin: "20px",
+    border: "3px solid black",
+    borderRadius: "15px",
+    overflow: "hidden",
   },
-  download: {
-    marginLeft: "auto",
-  },
+  controls: (theme) => ({
+    border: `1px solid ${theme.palette.primaryHighlight}`,
+    padding: "10px",
+    backgroundColor: "black",
+    display: "flex",
+    justifyContent: "center",
+  }),
 };
 
 const PdfViewer = ({ blob, style = defaultstyle }) => {
@@ -59,8 +57,9 @@ const PdfViewer = ({ blob, style = defaultstyle }) => {
             key={"page-" + i}
             scale={zoomLevel}
             pageNumber={i}
-            renderAnnotationLayer={false}
-            renderTextLayer={false}
+            renderAnnotationLayer={true}
+            renderTextLayer={true}
+            onLoadSuccess={async (page) => console.log(await page.getAnnotations())}
           />
         </Box>
       );
@@ -71,18 +70,14 @@ const PdfViewer = ({ blob, style = defaultstyle }) => {
   return (
     <>
       <Box sx={style.container}>
-        <Box sx={style.pdf(theme)}>
-          <Document id="pdf" file={blob} onLoadSuccess={onDocumentLoadSuccess}>
-            {mapPages()}
-          </Document>
-        </Box>
+        <Document id="pdf" file={blob} onLoadSuccess={onDocumentLoadSuccess}>
+          {mapPages()}
+        </Document>
+      </Box>
 
-        <Box sx={style.controls}>
-          <Zoom zoomLevel={zoomLevel} setZoomLevel={setZoomLevel} />
-          <Box sx={style.download}>
-            <Download blob={blob} />
-          </Box>
-        </Box>
+      <Box sx={style.controls(theme)}>
+        <Zoom zoomLevel={zoomLevel} setZoomLevel={setZoomLevel} />
+        <Download blob={blob} />
       </Box>
     </>
   );

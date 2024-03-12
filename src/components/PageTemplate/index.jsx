@@ -4,25 +4,30 @@ import { useTheme } from "@emotion/react";
 
 const style = {
   container: (theme) => ({
-    height: "80vh",
-    overflow: "auto",
-    paddingTop: "50px",
-    margin: "auto",
+    height: "calc(100vh - 100px)",
+    overflowY: "auto",
+    overflowX: "hidden",
+
     ...theme.scrollbar,
   }),
   pagecontainer: {
+    width: "calc(100vw - 34px)",
+  },
+  page: {
+    paddingLeft: "34px",
+    margin: "auto",
     width: "80%",
-    margin: "auto"
-
-  }
+  },
 };
 
 const PageTemplate = (props) => {
   const theme = useTheme();
   return (
     <>
-      <Box sx={style.container}>
-        <Box sx={style.pagecontainer}>{props.children}</Box>
+      <Box sx={style.container(theme)}>
+        <Box sx={style.pagecontainer}>
+          <Box sx={style.page}>{props.children}</Box>
+        </Box>
       </Box>
     </>
   );

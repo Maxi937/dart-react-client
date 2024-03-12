@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import DocumentModelPicker from "../../Pickers/DocumentModelPicker/index.jsx";
-import EnvPicker from "../../Pickers/EnvPicker/index.jsx";
-import DartDropzone from "../../Form/DartDropzone/index.jsx";
+import DocumentModelPicker from "../../Pickers/DocumentModelPicker";
+import EnvPicker from "../../Pickers/EnvPicker";
+import DartDropzone from "../../Form/DartDropzone";
 import DocumentResults from "./DocumentResults.jsx";
 import {
   cancelXpressionDocumentsQuery,
@@ -21,12 +21,9 @@ const styles = {
     gap: "20px",
   },
   modelContainer: {
-    borderRadius: "20px",
-    paddingLeft: "20px",
     flex: 1,
     display: "flex",
     alignItems: "center",
-    background: "black",
   },
   dropzone: {
     padding: "50px",
@@ -107,7 +104,10 @@ function GenerateForm() {
         <EnvPicker onSelected={handleEnvChange} />
 
         <Box sx={styles.modelContainer}>
-          <DocumentModelPicker placeholder={"Document Model"} onSelected={handleDocumentModelChange} />
+          <DocumentModelPicker
+            placeholder={"Document Model"}
+            onSelected={handleDocumentModelChange}
+          />
         </Box>
 
         {formSubmitted ? (

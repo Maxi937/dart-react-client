@@ -6,8 +6,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import BrandStyledTextFat from "../Text/BrandStyledTextFat";
+import BrandStyledTextFat from "../Primitives/Text/BrandStyledTextFat";
 
 const styles = {
   appBar: (theme) => {
