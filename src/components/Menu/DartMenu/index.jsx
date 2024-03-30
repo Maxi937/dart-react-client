@@ -34,10 +34,9 @@ function DartMenu({ menuItems }) {
       <Grid container spacing={2}>
         {menuItems.map((item, index) => {
           return (
-            <Grid item lg={4} md={6} xs={12}>
+            <Grid key={index} item lg={4} md={6} xs={12}>
               <Box sx={styles.item}>
                 <DartActionMenuItem
-                  key={index}
                   icon={item.icon}
                   title={item.title}
                   route={item.route}

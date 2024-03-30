@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import DocumentModelPicker from "../../Pickers/DocumentModelPicker";
 import EnvPicker from "../../Pickers/EnvPicker";
 import DartDropzone from "../../Form/DartDropzone";
@@ -55,7 +55,7 @@ function GenerateForm() {
   const [files, setSelectedFiles] = useState([]);
   const [documentModel, setDocumentModel] = useState(null);
   const [canGenerate, setCanGenerate] = useState(false);
-  const [env, setEnv] = useState("");
+  const [env, setEnv] = useState("dev");
 
   useEffect(() => {
     if (files?.length >= 1 && env && documentModel) {
@@ -101,10 +101,11 @@ function GenerateForm() {
   return (
     <Box>
       <Box sx={styles.topBar}>
-        <EnvPicker onSelected={handleEnvChange} />
+        <EnvPicker selected={env} onSelected={handleEnvChange} />
 
         <Box sx={styles.modelContainer}>
           <DocumentModelPicker
+            selected={documentModel?.mdl_nm}
             placeholder={"Document Model"}
             onSelected={handleDocumentModelChange}
           />

@@ -8,11 +8,12 @@ import { Modal } from "@mui/material";
 import { IconButton } from "@mui/material";
 import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import DartModal from "../Primitives/DartModal";
 
 const styles = {
   container: (theme) => {
     return {
-      filter: "brightness(65%)",
+      color: "lightgreen",
       display: "flex",
       alignItems: "center",
       gap: "25px",
@@ -60,18 +61,11 @@ const styles = {
       color: "white",
     },
   },
-  modalContent: {
-    position: "absolute",
-    padding: "20px",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "50vw",
-    height: "60vh",
-    bgcolor: "#242424",
-    border: "2px solid #000",
-    boxShadow: 24,
-  },
+  viewer: (theme) => ({
+    height: "inherit",
+    display: "flex",
+    flexDirection: "column",
+  }),
 };
 
 function DocumentResult({ document }) {
@@ -149,16 +143,11 @@ function DocumentResult({ document }) {
           <VisibilityIcon fontSize="large" />
         </IconButton>
       </Box>
-      <Modal
-        open={isOpen}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={styles.modalContent}>
+      <DartModal isOpen={isOpen} handleClose={handleClose}>
+        <Box sx={styles.viewer}>
           <PdfViewer blob={pdfFile()} />
         </Box>
-      </Modal>
+      </DartModal>
     </Paper>
   );
 }

@@ -4,7 +4,7 @@ import { useTheme } from "@emotion/react";
 
 const style = {
   container: (theme) => ({
-    height: "calc(100vh - 100px)",
+    height: "calc(100vh - 80px)",
     overflowY: "auto",
     overflowX: "hidden",
 

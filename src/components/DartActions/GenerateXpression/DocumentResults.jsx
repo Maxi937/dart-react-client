@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import DocumentResult from "../../XpressionDocument";
 import { useXpressionDocuments } from "../../../hooks/useXpressionDocuments";
+import CenteredSpinner from "../../Primitives/CenteredSpinner";
 
 const styles = {
   container: {
@@ -22,18 +23,18 @@ const styles = {
 function DocumentResults({ env, documentModelCode, files }) {
   const documents = useXpressionDocuments(env, documentModelCode, files);
 
+  function areSomeStillLoading() {
+    if (documents.some((r) => r.isLoading)) {
+      return true;
+    }
+    return false;
+  }
+
   return (
     <Box sx={styles.container}>
       {documents.map((result) => {
         if (result.isSuccess) {
           return <DocumentResult document={result.data.document} />;
-        }
-        if (result.isLoading) {
-          return (
-            <Box sx={styles.loadingState}>
-              <CircularProgress></CircularProgress>
-            </Box>
-          );
         }
         if (result.isError) {
           return (
@@ -43,6 +44,7 @@ function DocumentResults({ env, documentModelCode, files }) {
           );
         }
       })}
+      {areSomeStillLoading() && <CenteredSpinner />}
     </Box>
   );
 }

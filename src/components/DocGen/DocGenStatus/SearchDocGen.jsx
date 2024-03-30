@@ -8,11 +8,16 @@ import CenteredSpinner from "../../Primitives/CenteredSpinner/index.jsx";
 import DartDatePicker from "../../Form/DartDatePicker/index.jsx";
 import moment from "moment";
 import PaginateContent from "../../Primitives/PaginatedContent/index.jsx";
+import DocGenStats from "../DocGenStats/index.jsx";
+import Spacer from "../../Primitives/Spacer/index.jsx";
+import SearchForm from "../DocGenSearch";
+import DartModal from "../../Primitives/DartModal/index.jsx";
+import DartButton from "../../Form/DartButton/index.jsx";
 
 const styles = {};
 
-function SearchDocGen({ query }) {
-  const [pageNumber, setPageNumber] = useState(0);
+function SearchDocGen({ query, setQuery }) {
+  const [isOpen, setIsOpen] = useState(false);
   const { data, isLoading, isError } = useDocGenStatus(query);
 
   if (isLoading) {
@@ -26,7 +31,24 @@ function SearchDocGen({ query }) {
   const { docgeninfo } = data;
 
   return (
-    <PaginateContent data={docgeninfo} pageSize={10} render={(item) => <DocGenItem docgenitem={item}/>} />
+    <Box>
+      <DocGenStats data={docgeninfo} />
+      <Spacer padding={"10px"} />
+      <PaginateContent
+        title={<DartButton handleClick={() => setIsOpen(true)}>Search</DartButton>}
+        data={docgeninfo}
+        pageSize={10}
+        render={(item) => <DocGenItem docgenitem={item} />}
+      />
+      <DartModal isOpen={isOpen} handleClose={() => setIsOpen(false)}>
+        <SearchForm
+          handleSearch={(query) => {
+            setIsOpen(false);
+            setQuery(query);
+          }}
+        />
+      </DartModal>
+    </Box>
   );
 }
 

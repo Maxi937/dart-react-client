@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import DartMenu from "../../components/Menu/DartMenu";
 import CreateIcon from "@mui/icons-material/Create";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
-
 import CallMergeIcon from "@mui/icons-material/CallMerge";
 import AutoStoriesOutlinedIcon from "@mui/icons-material/AutoStoriesOutlined";
 import MonitorHeartOutlinedIcon from "@mui/icons-material/MonitorHeartOutlined";
 import PageTemplate from "../../components/PageTemplate";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ServerNotice from "../../components/ServerNotice";
 import Spacer from "../../components/Primitives/Spacer";
+import moment from "moment";
+import { useQueryClient } from "react-query";
+import { useDocumentationTree } from "../../hooks/useDocumentationTree";
+import { useEnvironments } from "../../hooks/useEnvironments";
+import { useDocGenStatus } from "../../hooks/useDocGenStatus";
 
 const homeMenu = [
   {
@@ -45,10 +49,14 @@ const homeMenu = [
 ];
 
 const HomePage = (props) => {
+  const queryClient = useQueryClient();
+  queryClient.prefetchQuery(useDocumentationTree());
+  queryClient.prefetchQuery(useEnvironments());
+  
   return (
     <PageTemplate>
       <ServerNotice></ServerNotice>
-      <Spacer padding={"2rem"}/>
+      <Spacer padding={"2rem"} />
       <DartMenu menuItems={homeMenu} />
     </PageTemplate>
   );

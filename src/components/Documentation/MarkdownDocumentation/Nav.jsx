@@ -9,15 +9,15 @@ const styles = (theme) => ({
   textDecoration: "none",
   transition: "all 0.2s ease",
   "&:hover": {
-    color: theme.palette.primaryHighlight
-  }
+    color: theme.palette.primaryHighlight,
+  },
 });
 
 export default function Nav({ children, ...rest }) {
-  const theme = useTheme()
+  const theme = useTheme();
 
   return (
-    <Link href={rest.href} sx={styles(theme)}>
+    <Link href={rest.href} sx={styles(theme)} target="_blank">
       {children[0]}
     </Link>
   );

@@ -8,6 +8,10 @@ import DocumentModels from "../../Pickers/DocumentModelPicker/DocumentPicker.jsx
 
 const styles = {
   container: {
+    userSelect: "none",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+    textWrap: "nowrap",
     background: "black",
     borderRadius: "20px",
     paddingLeft: "20px",
@@ -40,8 +44,7 @@ const styles = {
   },
 };
 
-function DocumentModelPicker({ placeholder, onSelected = (documentModel) => {} }) {
-  const [selected, setSelected] = useState("");
+function DocumentModelPicker({ selected, placeholder, onSelected = (documentModel) => {} }) {
   const [open, setOpen] = useState(false);
 
   function handleIconClick() {
@@ -53,7 +56,6 @@ function DocumentModelPicker({ placeholder, onSelected = (documentModel) => {} }
   }
 
   function handleSelected(document) {
-    setSelected(document);
     onSelected(document);
     handleClose();
   }
@@ -62,7 +64,7 @@ function DocumentModelPicker({ placeholder, onSelected = (documentModel) => {} }
     <Box sx={styles.container}>
       {selected ? (
         <Typography>
-          {selected.mdl_nm}
+          {selected}
         </Typography>
       ) : (
         <Typography color={"grey"}>

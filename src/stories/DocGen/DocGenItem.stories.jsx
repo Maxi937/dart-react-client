@@ -1,4 +1,4 @@
-import DocGenItem from "../../components/DocGenItem";
+import DocGenItem from "../../components/DocGen/DocGenItem";
 import { docgenitemSuccess, docgenitemFail } from "../fixtures/docgen";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export

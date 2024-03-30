@@ -4,8 +4,63 @@ import { registerAxiosResponseHandler } from "../utils/service-utils.js";
 registerAxiosResponseHandler(axios);
 
 export const dartService = {
-  async analyseBdt(documentModelCode, signal = null) {
-    const { data } = await axios.get(`/api/dart/bdt/${documentModelCode}`, {
+  async getContentGroup(documentName, id, env, signal = null) {
+    const { data } = await axios.get(`/api/xpression/${documentName}/content`, {
+      params: {
+        textClassId: id,
+        env: env,
+      },
+      signal: signal,
+    });
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
+  async testBdt(bdtSequence, candidate, signal = null) {
+    const { data } = await axios.post(
+      `/api/dart/bdt/test`,
+      { sequence: bdtSequence, candidate: candidate },
+      {
+        signal,
+      }
+    );
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
+  async compileBdt(documentModel, env, candidate, signal = null) {
+    console.log(documentModel);
+    console.log(env);
+    const { data } = await axios.post(
+      `/api/dart/bdt/${documentModel.mdl_nm}`,
+      { env: env, documentModel: documentModel, candidate: candidate },
+      {
+        signal,
+      }
+    );
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
+  async analyseBdt(documentModel, env, signal = null) {
+    console.log(documentModel);
+    const { data } = await axios.get(`/api/dart/bdt/${documentModel.mdl_cd}`, {
+      params: {
+        ...documentModel,
+        env: env,
+      },
       signal: signal,
     });
 
@@ -76,7 +131,6 @@ export const dartService = {
     );
 
     if (!data.success) {
-      console.log(data);
       throw new Error(data.error);
     }
 

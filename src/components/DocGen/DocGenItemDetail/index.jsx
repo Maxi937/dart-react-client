@@ -64,6 +64,7 @@ function DocGenItemDetail({ docgenitem }) {
           header={"Processing Time"}
           info={String(docgenitem.ProcessingTime_Seconds).concat(" s")}
         />
+        <Content header={"Document Model"} info={docgenitem.mdl_nm} />
         <Content header={"Document ID"} info={docgenitem.doc_id} />
         <Content header={"Document Name"} info={docgenitem.doc_nm} />
         <Content header={"Case/Policy"} info={docgenitem.doc_pkg_nm} />

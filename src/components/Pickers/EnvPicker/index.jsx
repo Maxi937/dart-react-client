@@ -27,14 +27,11 @@ const styles = {
   },
 };
 
-function EnvPicker({ onSelected = (env) => {} }) {
-  const [selected, setSelected] = useState("");
-
+function EnvPicker({ selected, onSelected = (env) => {} }) {
   const { data, isLoading, isError } = useEnvironments();
 
   function handleClick(env) {
     onSelected(env);
-    setSelected(env);
   }
 
   if (isLoading) {

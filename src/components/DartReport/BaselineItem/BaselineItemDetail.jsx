@@ -5,6 +5,7 @@ import { useTheme } from "@emotion/react";
 import PdfViewer from "../../PdfViewer";
 import { useGenerateBaseline } from "../../../hooks/useGenerateBaseline";
 import CenteredSpinner from "../../Primitives/CenteredSpinner";
+import Spacer from "../../Primitives/Spacer";
 
 const styles = {
   container: (theme) => ({
@@ -54,7 +55,12 @@ function BaselineItemDetail({ baselineItem, code }) {
   );
 
   if (isLoading) {
-    return <CenteredSpinner></CenteredSpinner>;
+    return (
+      <>
+        <Spacer padding={"10%"}></Spacer>
+        <CenteredSpinner></CenteredSpinner>
+      </>
+    );
   }
 
   if (isError) {
@@ -73,7 +79,7 @@ function BaselineItemDetail({ baselineItem, code }) {
 
   return (
     <Box sx={styles.container(theme)}>
-        <PdfViewer blob={file}></PdfViewer>
+      <PdfViewer blob={file}></PdfViewer>
     </Box>
   );
 }

@@ -22,11 +22,10 @@ const ServerNotice = (props) => {
   }
 
   const {notifications} = data;
-  console.log(data)
 
   return (
     <Carousel>
-      {notifications.map((n) => <ServerNoticeItem title={n.title} data={n.data} />)}
+      {notifications.map((n) => <ServerNoticeItem key={n.title} title={n.title} data={n.data} />)}
     </Carousel>
   );
 };

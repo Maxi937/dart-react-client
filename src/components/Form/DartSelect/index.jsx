@@ -5,7 +5,8 @@ import Box from "@mui/material/Box";
 
 const styles = {
   selectBox: {
-	display: "flex",
+    background: "black",
+    display: "flex",
     "& *": {
       color: "white !important",
     },
@@ -34,25 +35,36 @@ const styles = {
     },
   },
   field: {
-	flex: "1"
+    flex: "1",
+  },
+  menuItem: {
+    filter: "brightness(65%)",
+    transition: "all ease 0.2s",
+    padding: "10px",
+    "&: hover": {
+      background: "black",
+      filter: "brightness(100%)",
+    },
   },
 };
 
-const DartSelect = ({ label, choices=["choice1", "choice2", "choice3"], onSelectionChange, disabled=false }) => {
+const DartSelect = ({
+  label,
+  choices = ["choice1", "choice2", "choice3"],
+  onSelectionChange,
+  disabled = false,
+}) => {
   const [selected, setSelected] = useState("");
 
   function handleSelectionChange(event) {
     setSelected(event.target.value);
-
-    if (onSelectionChange) {
-      onSelectionChange(event);
-    }
+    onSelectionChange(event.target.value);
   }
 
   function mapchoices(choices) {
     if (choices) {
       return choices.map((option, index) => (
-        <MenuItem key={index} value={option}>
+        <MenuItem sx={styles.menuItem} key={index} value={option}>
           {option}
         </MenuItem>
       ));
@@ -63,6 +75,16 @@ const DartSelect = ({ label, choices=["choice1", "choice2", "choice3"], onSelect
     <Box sx={styles.selectBox}>
       <TextField
         InputLabelProps={{ shrink: false }}
+        inputProps={{
+          MenuProps: {
+            PaperProps: {
+              sx: {
+                backgroundColor: "black",
+                border: "1px solid white",
+              },
+            },
+          },
+        }}
         value={selected}
         disabled={disabled}
         label={selected ? "" : label}

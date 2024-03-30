@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Input, InputLabel } from "@mui/material";
+import { Input, InputLabel, Box, Typography } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 
 const styles = {
@@ -8,7 +8,6 @@ const styles = {
   },
   emptyicon: {
     transition: "all 0.2s ease",
-    padding: "5px",
     color: "grey",
     "&:hover": {
       color: "gold",
@@ -17,33 +16,32 @@ const styles = {
   },
   filledicon: {
     transition: "all 0.2s ease",
-    padding: "5px",
     color: "gold",
     "&:hover": {
       color: "gold",
       cursor: "pointer",
-      filter: "brightness(110%)"
+      filter: "brightness(110%)",
     },
   },
-  container: {
-    color: "black",
+  container: {},
+  content: {
     display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    overflow: "hidden",
+    gap: "3px",
+    alignItems: "end",
   },
 };
 
-const Filepicker = ({ accept, onInputChange}) => {
-  const [file, setSelectedFile] = useState("");
-
+const Filepicker = ({
+  selected,
+  accept,
+  handleFileSelected = (file) => {},
+}) => {
   function handleFileChange(e) {
     const file = e.target.files[0];
 
     if (file) {
-      setSelectedFile(e.target.files[0]);
+      handleFileSelected(file);
     }
-    onInputChange(e);
   }
 
   return (
@@ -57,11 +55,14 @@ const Filepicker = ({ accept, onInputChange}) => {
         style={styles.hidden}
         type="file"
       />
-      {file ? (
-        <FolderIcon sx={styles.filledicon} fontSize="large" />
-      ) : (
-        <FolderIcon sx={styles.emptyicon} fontSize="large" />
-      )}
+      <Box sx={styles.content}>
+        {selected ? (
+          <FolderIcon sx={styles.filledicon} fontSize="large" />
+        ) : (
+          <FolderIcon sx={styles.emptyicon} fontSize="large" />
+        )}
+        <Typography color={"white"}>{selected.name}</Typography>
+      </Box>
     </InputLabel>
   );
 };

@@ -12,14 +12,6 @@ export function useDocumentationTree() {
   });
 }
 
-// export function useAllDocumentation(documentationNames) {
-//   return useQueries(
-//     documentationNames.map((documentationName) => {
-//       useCompare(compare.baseline, compare.candidate);
-//     })
-//   );
-// }
-
 export function useInvalidateDocumentation() {
   const queryClient = useQueryClient();
   queryClient.invalidateQueries({ queryKey: ["documentationTree"] });

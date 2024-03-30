@@ -9,6 +9,7 @@ import Dark from "./themes/Dark.jsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { Box } from "@mui/material";
+import BdtContextProvider from "./contexts/useBdtSequence.jsx";
 
 const rootElement = createRoot(document.getElementById("root"));
 
@@ -31,7 +32,9 @@ rootElement.render(
       <BrowserRouter>
         <ThemeProvider theme={Dark}>
           <SiteHeader />
-          <Router />
+          <BdtContextProvider>
+            <Router />
+          </BdtContextProvider>
         </ThemeProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

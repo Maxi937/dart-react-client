@@ -1,20 +1,15 @@
 import React, { useEffect, useState, Children } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import ForwardRoundedIcon from "@mui/icons-material/ForwardRounded";
-import ArrowCircleRightRoundedIcon from "@mui/icons-material/ArrowCircleRightRounded";
-import ArrowCircleLeftRoundedIcon from "@mui/icons-material/ArrowCircleLeftRounded";
 import { useTheme } from "@emotion/react";
 import CircleIcon from "@mui/icons-material/Circle";
-import Slide from "@mui/material/Slide";
 import Fade from "@mui/material/Fade";
 import { TransitionGroup } from "react-transition-group";
 
 const styles = {
   container: {
-	backgroundColor: "black",
-	borderRadius: "15px",
+    backgroundColor: "black",
+    borderRadius: "15px",
     display: "flex",
     flexDirection: "column",
   },
@@ -70,7 +65,11 @@ function Carousel({ data, pageSize, children }) {
 
       <Box sx={styles.iconContainer}>
         {children.map((_, index) => (
-          <IconButton size={"small"} onClick={() => setChildToRender(index)}>
+          <IconButton
+            key={index}
+            size={"small"}
+            onClick={() => setChildToRender(index)}
+          >
             <CircleIcon
               sx={
                 index == childToRender

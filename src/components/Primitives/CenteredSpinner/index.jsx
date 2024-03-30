@@ -3,12 +3,12 @@ import { Box, CircularProgress } from "@mui/material";
 
 const styles = {
   container: {
-	padding: "50px",
-	display: "flex",
-	flex: "1",
-	justifyContent: "center",
-	alignItems: "center",
-    bgcolor: "#242424",
+    padding: "50px",
+    display: "flex",
+    flex: "1",
+    justifyContent: "center",
+    alignItems: "center",
+    bgcolor: "transparent",
   },
 };
 

@@ -13,9 +13,9 @@ import { useTheme } from "@emotion/react";
 
 const styles = {
   container: {
+    width: "inherit",
     height: "inherit",
     display: "flex",
-    gap: "20px",
   },
   inputZone: (isDragActive) => {
     return {
@@ -72,7 +72,7 @@ const styles = {
   },
 };
 
-const MDropzone = ({ handleDrop, acceptedFileTypes, singleFile=false }) => {
+const DartDropzone = ({ handleDrop, acceptedFileTypes, singleFile=false }) => {
   const theme = useTheme();
   const [files, setSelectedFiles] = useState([]);
   const [open, setOpen] = useState(false);
@@ -161,4 +161,4 @@ const MDropzone = ({ handleDrop, acceptedFileTypes, singleFile=false }) => {
   );
 };
 
-export default MDropzone;
+export default DartDropzone;

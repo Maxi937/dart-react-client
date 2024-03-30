@@ -18,6 +18,26 @@ const Dark = createTheme({
       backgroundColor: "rgba(10,190,265,1)",
     },
   },
+  animations: {
+    skew: {
+      animation: "skew 1.50s",
+      "@keyframes skew": {
+        "0%": { transform: "skewY(-15deg)" },
+        "5%": { transform: "skewY(15deg)" },
+        "10% ": { transform: "skewY(-15deg)" },
+        "15%": { transform: "skewY(15deg)" },
+        "20%": { transform: "skewY(0deg)" },
+        "100%": { transform: "skewY(0deg)" },
+      },
+    },
+    // pop: {
+    //   animation: "pop 0.30s infinte",
+    //   "@keyframes pop": {
+    //     "0%": { transform: "scale(1.0)" },
+    //     "100%": { transform: "scale(0.8)" },
+    //   },
+    // },
+  },
   palette: {
     accentColor: "red",
     primaryHighlight: "rgba(10,190,265,1)",

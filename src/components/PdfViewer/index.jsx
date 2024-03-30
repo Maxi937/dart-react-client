@@ -5,8 +5,9 @@ import Download from "./download.jsx";
 import Zoom from "./zoom.jsx";
 import { useTheme } from "@emotion/react";
 import "react-pdf/dist/esm/Page/TextLayer.css";
-import 'react-pdf/dist/Page/TextLayer.css';
-import 'react-pdf/dist/Page/AnnotationLayer.css';
+import "react-pdf/dist/Page/TextLayer.css";
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import CenteredSpinner from "../Primitives/CenteredSpinner/index.jsx";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -59,7 +60,9 @@ const PdfViewer = ({ blob, style = defaultstyle }) => {
             pageNumber={i}
             renderAnnotationLayer={true}
             renderTextLayer={true}
-            onLoadSuccess={async (page) => console.log(await page.getAnnotations())}
+            onLoadSuccess={async (page) =>
+              console.log(await page.getAnnotations())
+            }
           />
         </Box>
       );
@@ -70,7 +73,12 @@ const PdfViewer = ({ blob, style = defaultstyle }) => {
   return (
     <>
       <Box sx={style.container}>
-        <Document id="pdf" file={blob} onLoadSuccess={onDocumentLoadSuccess}>
+        <Document
+          loading={""}
+          id="pdf"
+          file={blob}
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
           {mapPages()}
         </Document>
       </Box>

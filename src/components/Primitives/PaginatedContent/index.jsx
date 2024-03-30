@@ -13,9 +13,18 @@ const styles = {
   }),
   paginatorContainer: (theme) => ({
     display: "flex",
-    justifyContent: "flex-end",
     alignItems: "center",
   }),
+  left: {
+    display: "flex",
+    alignItems: "center",
+  },
+  right: {
+    flex: 1,
+    justifyContent: "right",
+    display: "flex",
+    alignItems: "center",
+  },
   icons: (direction, theme) => ({
     fontSize: "20px",
     padding: "10px",
@@ -25,12 +34,12 @@ const styles = {
     transform: direction == "left" && "rotate(180deg)",
     transition: "all ease 0.2s",
     "&:hover": {
-      backgroundColor: "violet",
+      background: theme.palette.primaryHighlight,
     },
   }),
 };
 
-function PaginateContent({ data, pageSize, render = (item) => {} }) {
+function PaginateContent({ data, pageSize, title, render = (item) => {} }) {
   const theme = useTheme();
   const [pageNumber, setPageNumber] = useState(0);
   const maxPages = parseInt(data.length / pageSize);
@@ -55,17 +64,23 @@ function PaginateContent({ data, pageSize, render = (item) => {} }) {
   return (
     <Box>
       <Box sx={styles.paginatorContainer}>
-        <Box>
-          <Typography>
-            {pageNumber + 1} of {maxPages + 1} {maxPages === 0 ? "page" : "pages"}
-          </Typography>
+        <Box sx={styles.left}>
+          {title}
         </Box>
-        <IconButton aria-label="backward" onClick={handleBackwardClick}>
-          <ForwardRoundedIcon sx={styles.icons("left", theme)} />
-        </IconButton>
-        <IconButton aria-label="forward" onClick={handleForwardClick}>
-          <ForwardRoundedIcon sx={styles.icons("right", theme)} />
-        </IconButton>
+        <Box sx={styles.right}>
+          <Box>
+            <Typography>
+              {pageNumber + 1} of {maxPages + 1}{" "}
+              {maxPages === 0 ? "page" : "pages"}
+            </Typography>
+          </Box>
+          <IconButton aria-label="backward" onClick={handleBackwardClick}>
+            <ForwardRoundedIcon sx={styles.icons("left", theme)} />
+          </IconButton>
+          <IconButton aria-label="forward" onClick={handleForwardClick}>
+            <ForwardRoundedIcon sx={styles.icons("right", theme)} />
+          </IconButton>
+        </Box>
       </Box>
       <Box sx={styles.results(theme)}>
         {results.map((result, index) => render(result))}

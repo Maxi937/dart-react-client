@@ -7,7 +7,8 @@ import SearchField from "../../Primitives/DartFormFieldWithHeader";
 import DartTextField from "../../Form/DartTextField";
 import DocumentModelPicker from "../../Pickers/DocumentModelPicker";
 import { useTheme } from "@emotion/react";
-import moment from "moment"
+import moment from "moment";
+import DartSelect from "../../Form/DartSelect";
 
 const styles = {
   container: (theme) => ({
@@ -92,6 +93,7 @@ function SearchDocGenForm({ handleSearch = (query) => {} }) {
 
       <Box sx={styles.docInfoContainer}>
         <EnvPicker
+          selected={query.env}
           onSelected={(env) => updateQuery({ name: "env", value: env })}
         />
 
@@ -117,9 +119,10 @@ function SearchDocGenForm({ handleSearch = (query) => {} }) {
 
         <SearchField header={"Document Model"}>
           <DocumentModelPicker
-            onSelected={(selected) => {
-              updateQuery({ name: "code", value: selected.mdl_cd });
-            }}
+            selected={query.code}
+            onSelected={(selected) =>
+              updateQuery({ name: "code", value: selected.mdl_cd })
+            }
           />
         </SearchField>
 
@@ -133,10 +136,11 @@ function SearchDocGenForm({ handleSearch = (query) => {} }) {
         </SearchField>
 
         <SearchField header={"Status"}>
-          <DartTextField
-            value={query.status}
-            onSetValue={(value) =>
-              updateQuery({ name: "status", value: value })
+          <DartSelect
+            label={""}
+            choices={["GENERROR", "CMPLETED", "FINALZED", "GENRATED"]}
+            onSelectionChange={(selection) =>
+              updateQuery({ name: "status", value: selection })
             }
           />
         </SearchField>
