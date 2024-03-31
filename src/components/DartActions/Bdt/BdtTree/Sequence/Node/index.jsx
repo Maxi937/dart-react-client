@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import Spacer from "../../../../../Primitives/Spacer";
 
 const styles = {
   container: (theme) => ({
@@ -12,18 +13,20 @@ const styles = {
     transition: "0.2s all ease",
   }),
   node: (theme, props) => ({
-    borderRadius: "5px",
+    borderRadius: "8px",
     width: "fit-content",
     display: "flex",
     flexDirection: "column",
+    justifyContent: "flex-start",
+    justifyItems: "flex-start",
     background: theme.palette.primaryBackground,
-    border: `4px solid ${
+    border: `2px solid ${
       props.evaluated ? "green" : theme.palette.primaryBackground
     }`,
     transition: "0.2s all ease",
     "&:hover": {
       cursor: "pointer",
-      border: `solid 4px ${theme.palette.primaryHighlight}`,
+      border: `solid 2px ${theme.palette.primaryHighlight}`,
     },
   }),
   items: (theme) => ({
@@ -41,18 +44,26 @@ const styles = {
   }),
   content: (theme) => ({
     fontSize: "10px",
-    alignItems: "center",
+    alignItems: "start",
+    alignContent: "flex-start",
     padding: "10px",
   }),
 };
 
+
+
 export default function Node(props) {
   const theme = useTheme();
+
+  function handleClick() {
+    console.log(props)
+    props.render.handleNodeClick(props)
+  }
 
   return (
     <Box
       sx={styles.container(theme)}
-      onClick={() => props.render.handleNodeClick(props)}
+      onClick={handleClick}
     >
       <Box sx={styles.node(theme, props)}>
         {props.title && (

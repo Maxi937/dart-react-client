@@ -37,8 +37,7 @@ export default function Or({ props }) {
 
     conditions.map((condition) => {
       if (condition.Or) {
-        console.log(condition);
-        result = result.concat(getOrRecurse(condition.Or.conditions));
+        result = result.concat(getOrRecurse(props.Or.conditions));
       } else {
         result.push(condition);
       }

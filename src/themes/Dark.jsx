@@ -30,13 +30,6 @@ const Dark = createTheme({
         "100%": { transform: "skewY(0deg)" },
       },
     },
-    // pop: {
-    //   animation: "pop 0.30s infinte",
-    //   "@keyframes pop": {
-    //     "0%": { transform: "scale(1.0)" },
-    //     "100%": { transform: "scale(0.8)" },
-    //   },
-    // },
   },
   palette: {
     accentColor: "red",

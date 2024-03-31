@@ -61,12 +61,12 @@ export default function Container(props) {
   }
 
   function isOpenable() {
-    return props.items?.length >= 1
+    return props.items?.length >= 1;
   }
 
   function handleDoubleClick(e) {
-    console.log(props)
-    props.onSequenceClick() 
+    console.log(props);
+    props.onSequenceClick();
   }
 
   return (
@@ -88,10 +88,8 @@ export default function Container(props) {
 
       {canOpen() && (
         <Box sx={styles.items}>
-          {props.items.map((prop, index) => (
-            <Box sx={styles.item} key={index}>
-              {render(prop)}
-            </Box>
+          {props.items.map((prop) => (
+            <Box key={uuidv4()}>{render(prop)}</Box>
           ))}
         </Box>
       )}

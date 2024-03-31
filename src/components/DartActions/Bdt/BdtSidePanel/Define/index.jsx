@@ -25,8 +25,6 @@ const styles = {
 export default function Define(props) {
   const theme = useTheme();
 
-  console.log(props);
-
   return (
     <Box sx={styles.container}>
       <Box sx={styles.input}>

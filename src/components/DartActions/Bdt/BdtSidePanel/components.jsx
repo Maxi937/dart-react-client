@@ -20,6 +20,7 @@ import BdtSidePanelAction from "./Content/BdtSidePanelAction.jsx";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import KeyIcon from "@mui/icons-material/Key";
+import Javascript from "@mui/icons-material/Javascript";
 
 const components = {
   Rule: (props) => (
@@ -47,10 +48,23 @@ const components = {
       Content={() => (
         <>
           <BdtSidePanelAction>IF</BdtSidePanelAction>
-          <Condition props={props} />
+          <Condition props={props.condition} />
         </>
       )}
       Icon={() => <MergeIcon htmlColor="green" />}
+    />
+  ),
+
+  GetUserExit: (props) => (
+    <Container
+      {...props}
+      Content={() => (
+        <>
+          <BdtSidePanelAction>User Exit</BdtSidePanelAction>
+          <BdtSidePanelContent>{props.userExit.name}</BdtSidePanelContent>
+        </>
+      )}
+      Icon={() => <Javascript htmlColor="yellow" />}
     />
   ),
 
@@ -76,14 +90,14 @@ const components = {
         <>
           <BdtSidePanelAction>READ</BdtSidePanelAction>
 
-          {props.fromTables.map((table) => (
-            <BdtSidePanelContent key={uuidv4()}>
+          {props.fromTables.map((index, table) => (
+            <BdtSidePanelContent key={`${index}-${table.tableName}`}>
               {table.tableName}
             </BdtSidePanelContent>
           ))}
 
           <BdtSidePanelAction>WHERE</BdtSidePanelAction>
-          <Condition props={props} />
+          <Condition props={props.condition} />
         </>
       )}
       Icon={() => <SearchIcon htmlColor="skyblue" />}
@@ -226,6 +240,7 @@ export function render(obj, onClick = () => {}) {
   const props = obj[Object.keys(obj)[0]];
 
   props.onSequenceClick = onClick;
+  props.key = uuidv4()
 
   return render(props);
 }

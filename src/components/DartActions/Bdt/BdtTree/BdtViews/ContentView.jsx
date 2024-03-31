@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import { getCompileBdtQuery } from "../../../../hooks/useCompileBdt";
-import Content from "./Content";
+import { getCompileBdtQuery } from "../../../../../hooks/useCompileBdt";
+import Content from "../Content";
 
 const styles = {
   container: {
@@ -11,7 +11,7 @@ const styles = {
 
 export default function ContentView(props) {
   const textClassIds = () =>
-    props.compile.solved.contentItems.map(
+    props.compile.content.displayedContentItems.map(
       (item) => item.InsertTextpiece.textClassId
     );
 

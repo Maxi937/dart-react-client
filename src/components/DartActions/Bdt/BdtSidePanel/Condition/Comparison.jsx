@@ -107,11 +107,11 @@ export default function Comparison({ props }) {
   return (
     <Box sx={styles.container}>
       <BdtSidePanelContent>
-        {getCompareFirstValue(props.compares[0])}
+        {getCompareFirstValue(props.Comparison.compares[0])}
       </BdtSidePanelContent>
-      {getOperator(props.operator)}
+      {getOperator(props.Comparison.operator)}
       <BdtSidePanelContent>
-        {getCompareSecondValue(props.compares[1])}
+        {getCompareSecondValue(props.Comparison.compares[1])}
       </BdtSidePanelContent>
     </Box>
   );

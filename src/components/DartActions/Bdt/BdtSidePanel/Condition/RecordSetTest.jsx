@@ -12,6 +12,8 @@ const styles = {
 };
 
 export default function RecordSetTest({ props }) {
+
+
   function getOperator(operator) {
     switch (operator) {
       case "noteod":
@@ -23,8 +25,8 @@ export default function RecordSetTest({ props }) {
 
   return (
     <Box sx={styles.container}>
-      <BdtSidePanelContent>{props.recordSetVar.name}</BdtSidePanelContent>
-      {getOperator(props.operator)}
+      <BdtSidePanelContent>{props.RecordSetTest.recordSetVar.name}</BdtSidePanelContent>
+      {getOperator(props.RecordSetTest.operator)}
     </Box>
   );
 }

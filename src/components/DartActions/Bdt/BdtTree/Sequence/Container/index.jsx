@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import Spacer from "../../../../../Primitives/Spacer";
 
 const styles = {
   container: (theme) => ({
@@ -44,7 +45,7 @@ const styles = {
   }),
   content: (theme) => ({
     fontSize: "10px",
-    alignItems: "center",
+    alignItems: "start",
     padding: "10px",
   }),
   tooltip: {

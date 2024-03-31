@@ -74,8 +74,6 @@ export default function BdtSidePanel(props) {
 
       function onMouseUp() {
         document.body.removeEventListener("mousemove", onMouseMove);
-        // uncomment the following line if not using `{ once: true }`
-        // document.body.removeEventListener("mouseup", onMouseUp);
       }
 
       document.body.addEventListener("mousemove", onMouseMove);
@@ -105,7 +103,7 @@ export default function BdtSidePanel(props) {
         <Box sx={styles.sideContent}>
           <Typography sx={styles.title}>{props.title}</Typography>
           <Box sx={styles.rulesList}>
-            {props.sequence.map((obj, index) => index != 0 && render(obj,onSequenceItemClick))}
+            {props.sequence.map((obj, index) => index != 0 && render(obj, onSequenceItemClick))}
           </Box>
         </Box>
       </Box>

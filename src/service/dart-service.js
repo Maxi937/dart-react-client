@@ -37,8 +37,6 @@ export const dartService = {
   },
 
   async compileBdt(documentModel, env, candidate, signal = null) {
-    console.log(documentModel);
-    console.log(env);
     const { data } = await axios.post(
       `/api/dart/bdt/${documentModel.mdl_nm}`,
       { env: env, documentModel: documentModel, candidate: candidate },

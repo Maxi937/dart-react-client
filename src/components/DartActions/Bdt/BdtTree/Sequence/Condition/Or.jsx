@@ -11,7 +11,8 @@ const styles = {
   container: {},
   condition: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
     gap: "10px",
   },
   icon: {
@@ -24,21 +25,19 @@ const styles = {
       backgroundColor: "skyblue",
     },
   },
-  navigation: {
-    paddingTop: "5px",
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-  },
 };
 
 export default function Or({ props }) {
+  const conditional = props.Or ? props.Or : props.And;
+
   function getOrRecurse(conditions) {
     let result = [];
 
     conditions.map((condition) => {
       if (condition.Or) {
         result = result.concat(getOrRecurse(condition.Or.conditions));
+      } else if (condition.And) {
+        result = result.concat(getOrRecurse(condition.And.conditions));
       } else {
         result.push(condition);
       }
@@ -46,40 +45,21 @@ export default function Or({ props }) {
     return result;
   }
 
-  const flatConditions = getOrRecurse(props.conditions);
+  const flatConditions = getOrRecurse(conditional.conditions);
 
   const [itemDisplay, setItemDisplay] = useState(0);
-
-  function nextItem(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (itemDisplay != flatConditions.length - 1) {
-      setItemDisplay(itemDisplay + 1);
-    }
-  }
-
-  function previousItem(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (itemDisplay != 0) {
-      setItemDisplay(itemDisplay - 1);
-    }
-  }
 
   return (
     <Box sx={styles.container}>
       <Box sx={styles.condition}>
-        <Condition props={flatConditions[itemDisplay]} />
-        {itemDisplay + 1 != flatConditions.length && (
-          <ActionText>OR</ActionText>
-        )}
-      </Box>
-      <Box sx={styles.navigation}>
-        <NavigateBeforeIcon sx={styles.icon} onClick={previousItem} />
-        <NavigateNextIcon sx={styles.icon} onClick={nextItem} />
-        <Typography fontSize={"0.6em"} color={"orange"} fontWeight={700}>
-          {itemDisplay + 1} of {flatConditions.length}
-        </Typography>
+        {flatConditions.map((c, index) => (
+          <Box>
+            <Condition props={c} />
+            {index + 1 != flatConditions.length && (
+              <ActionText color="orange">OR</ActionText>
+            )}
+          </Box>
+        ))}
       </Box>
     </Box>
   );

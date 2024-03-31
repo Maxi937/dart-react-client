@@ -21,6 +21,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import Action from "./Node/Action.jsx";
 import ActionText from "./Node/ActionText.jsx";
 import Container from "./Container/index.jsx";
+import Javascript from "@mui/icons-material/Javascript";
 import If from "./If/index.jsx";
 
 export const components = {
@@ -44,6 +45,19 @@ export const components = {
 
   If: If,
 
+  GetUserExit: (props) => (
+    <Node
+      {...props}
+      title="User Exit"
+      titleColor="darkslateblue"
+      Content={() => (
+        <Action Icon={<Javascript htmlColor="yellow" />}>
+          {props.userExit.name}
+        </Action>
+      )}
+    />
+  ),
+
   InsertTextpiece: (props) => (
     <Node
       {...props}
@@ -64,13 +78,16 @@ export const components = {
       titleColor="darkTurquoise"
       Content={() => (
         <Box>
-          {props.fromTables.map((table) => (
-            <Action Icon={<SearchIcon htmlColor="skyblue" />}>
+          {props.fromTables.map((table, index) => (
+            <Action
+              key={`${index}-${table.tableName}`}
+              Icon={<SearchIcon htmlColor="skyblue" />}
+            >
               {table.tableName}
             </Action>
           ))}
           <ActionText color="lightgreen">Where</ActionText>
-          <Condition props={props}></Condition>
+          <Condition props={props.condition}></Condition>
         </Box>
       )}
     />
@@ -129,8 +146,11 @@ export const components = {
               </Action>
             )}
             {props.variables.length >= 1 &&
-              props.variables.map((variable) => (
-                <Action Icon={<CompareArrowsIcon htmlColor="magenta" />}>
+              props.variables.map((variable, index) => (
+                <Action
+                  key={index}
+                  Icon={<CompareArrowsIcon htmlColor="magenta" />}
+                >
                   {variable.name}
                 </Action>
               ))}
@@ -165,48 +185,46 @@ export const components = {
   Label: (props) => (
     <Node
       {...props}
+      title="Label"
+      titleColor="red"
       Content={() => (
-        <>
-          <BdtSidePanelAction>LABEL</BdtSidePanelAction>
-          <BdtSidePanelContent>{props.name}</BdtSidePanelContent>
-        </>
+        <Action Icon={<LocalOfferIcon htmlColor="red" />}>{props.name}</Action>
       )}
-      Icon={() => <LocalOfferIcon htmlColor="red" />}
     />
   ),
 
   Jump: (props) => (
     <Node
       {...props}
+      title="GO TO"
+      titleColor="indigo"
       Content={() => (
-        <>
-          <BdtSidePanelAction>GOTO</BdtSidePanelAction>
-          <BdtSidePanelContent>{props.toLabel}</BdtSidePanelContent>
-        </>
+        <Action Icon={<RedoIcon htmlColor="yellow" />}>{props.toLabel}</Action>
       )}
-      Icon={() => <RedoIcon htmlColor="yellow" />}
     />
   ),
 
   RecordSetMoveNext: (props) => (
     <Node
       {...props}
+      title="Record Set Move Next"
+      titleColor="dodgerblue"
       Content={() => (
-        <>
-          <BdtSidePanelAction>NEXT</BdtSidePanelAction>
-          <BdtSidePanelContent>{props.recordSetVar.name}</BdtSidePanelContent>
-        </>
+        <Action Icon={<AutoStoriesIcon htmlColor="LightSkyBlue" />}>
+          {props.recordSetVar.name}
+        </Action>
       )}
-      Icon={() => <AutoStoriesIcon htmlColor="LightSkyBlue" />}
     />
   ),
   Reset: (props) => (
     <Node
       {...props}
       title="Reset"
-      titleColor="LightPink"
+      titleColor="DarkSlateGrey"
       Content={() => (
-        <Action Icon={<RestartAltIcon htmlColor="LightPink" />}></Action>
+        <Action Icon={<RestartAltIcon htmlColor="white" />}>
+          {props.objectRefListVar.name}
+        </Action>
       )}
     />
   ),

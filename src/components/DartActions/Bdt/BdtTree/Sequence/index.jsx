@@ -55,17 +55,15 @@ const styles = {
 };
 
 export default function BdtSequence(props) {
-  const s = props.sequence;
   const theme = useTheme();
+  const [scale, setScale] = useState(1);
+  const [backStack, setBackstack] = useState([]);
+  const [dragKey, setDragKey] = useState(uuidv4());
+  const [cursorStyle, setCursorStyle] = useState("grab");
+  const [sequence, setSequence] = useState(props.sequence);
 
   const MIN_ZOOM = 0.5;
   const MAX_ZOOM = 2.3;
-
-  const [scale, setScale] = useState(1);
-  const [backStack, setBackstack] = useState([]);
-  const [sequence, setSequence] = useState(s);
-  const [dragKey, setDragKey] = useState(uuidv4());
-  const [cursorStyle, setCursorStyle] = useState("grab");
 
   const onScroll = (e) => {
     e.stopPropagation();

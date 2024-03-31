@@ -2,8 +2,6 @@ import { useQuery, useQueries, useQueryClient } from "react-query";
 import { dartService } from "../service/dart-service";
 
 export function useDocGenStatus(query) {
-  console.log("getting doc gen status");
-  console.log(query);
   return useQuery({
     queryKey: ["docgenstatus", query],
     queryFn: ({ signal }) => dartService.getDocGenStatus(query, signal),

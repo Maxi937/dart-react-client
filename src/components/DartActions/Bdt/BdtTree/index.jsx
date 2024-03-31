@@ -6,20 +6,22 @@ import BdtSideMenu from "./BdtSideMenu";
 import QuizIcon from "@mui/icons-material/Quiz";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DescriptionIcon from "@mui/icons-material/Description";
-import TestView from "./TestView";
-import TreeView from "./TreeView";
+import TestView from "./BdtViews/TestView";
+import TreeView from "./BdtViews/TreeView";
 import { useTheme } from "@emotion/react";
-import ContentView from "./ContentView";
+import ContentView from "./BdtViews/ContentView";
 import { useCompileBdt } from "../../../../hooks/useCompileBdt";
 import CenteredSpinner from "../../../Primitives/CenteredSpinner";
 import { useInvalidateBdt } from "../../../../hooks/useAnalyseBdt";
 import { useQueryClient } from "react-query";
 import { readBlobLikeAsync } from "../../../../utils/file-utils";
+import BdtViews from "./BdtViews";
 
 const styles = {
   container: (theme) => ({
     display: "flex",
     height: "80cqh",
+    borderRadius: "5px"
   }),
   dropzone: {
     display: "flex",
@@ -31,14 +33,6 @@ const styles = {
     display: "grid",
     gridTemplateRows: "1fr auto",
     background: "black",
-  }),
-  view: (theme) => ({
-    display: "flex",
-    overflow: "hidden",
-  }),
-  leftMenu: (theme) => ({
-    background: "black",
-    borderRight: `2px solid ${theme.palette.primaryHighlight}`,
   }),
   mainMenu: (theme) => ({
     flex: 1,
@@ -58,28 +52,12 @@ export default function BdtTree(props) {
   const [xml, setXml] = useState("");
   const [view, setView] = useState(0);
 
-  const { data, refetch, isLoading, isFetching } = useCompileBdt(
+  const { data, refetch, isLoading, isFetching, isError } = useCompileBdt(
     props.documentModel,
     props.env,
     xml,
     xml != ""
   );
-
-  const views = [
-    {
-      icon: <AccountTreeIcon />,
-      render: <TreeView />,
-    },
-    {
-      icon: <QuizIcon />,
-      render: <TestView />,
-    },
-
-    {
-      icon: <DescriptionIcon />,
-      render: <ContentView />,
-    },
-  ];
 
   async function openBdt(xmlFile) {
     const xml = await readBlobLikeAsync(xmlFile);
@@ -91,19 +69,14 @@ export default function BdtTree(props) {
     <Box sx={styles.container}>
       {xml ? (
         <Box sx={styles.bdt}>
-          <Box sx={styles.view}>
-            <Box sx={styles.leftMenu}>
-              <BdtSideMenu view={view} setView={setView} views={views} />
-            </Box>
-            <Box sx={styles.mainMenu}>
-              {data &&
-                React.cloneElement(views[view].render, {
-                  ...props,
-                  compile: data.compile,
-                })}
-              {isLoading && <CenteredSpinner />}
-            </Box>
-          </Box>
+          <BdtViews
+            documentModel={props.documentModel}
+            env={props.env}
+            isLoading={isLoading}
+            isError={isError}
+            data={data}
+            view={view}
+          ></BdtViews>
           <Box sx={styles.actions}>
             <BdtActions
               candidateXml={xml}

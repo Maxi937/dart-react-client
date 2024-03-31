@@ -6,7 +6,6 @@ export function registerAxiosResponseHandler(axios) {
 		if (error.response) {
 		  return error.response;
 		}
-		console.log(error);
 		return Promise.reject(error);
 	  }
 	);

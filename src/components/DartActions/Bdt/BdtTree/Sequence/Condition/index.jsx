@@ -1,18 +1,13 @@
-import { Box, Typography } from "@mui/material";
 import Comparison from "./Comparison";
 import RecordSetTest from "./RecordSetTest";
 import Or from "./Or";
-
-const styles = {
-  container: {
-    display: "flex",
-  },
-};
+import { Typography } from "@mui/material";
 
 const components = {
   Comparison,
   RecordSetTest,
-  Or
+  Or,
+  And: Or
 };
 
 function getKeyFromProps(props) {
@@ -26,7 +21,11 @@ function getKeyFromProps(props) {
   return key;
 }
 
-export default function Condition({ props }) {
+export default function Condition({props}) {
+  if(!props) {
+    return <Typography>What is wrong with this language</Typography>
+  }
+
   const key = getKeyFromProps(props);
   const Render = components[key];
 
@@ -34,5 +33,5 @@ export default function Condition({ props }) {
     return;
   }
 
-  return <Render props={props[key]} />;
+  return <Render props={props} />;
 }

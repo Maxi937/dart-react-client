@@ -7,12 +7,12 @@ export function useCompileBdt(documentModel, env, xml, enabled) {
     queryKey: ["compileBdt", documentModel.mdl_nm, env, xml],
     queryFn: ({ signal }) =>
       dartService.compileBdt(documentModel, env, xml, signal),
-    staleTime: 0,
-    cacheTime: 0,
+    staleTime: Infinity,
+    cacheTime: Infinity,
     refetchOnMount: false,
     onSuccess: (data) => {
-      data.compile.all.sequence = ruleRollUp(data.compile.all.sequence);   
-      console.log(data) 
+      data.compile.sequence = ruleRollUp(data.compile.sequence)
+      console.log(data)
     },
     retry: false,
     enabled: enabled,
@@ -41,8 +41,9 @@ function ruleRollUp(data) {
 
     if (Object.keys(d)[0] == "If") {
       obj.true = ruleRollUp(obj.true);
+
       if (obj.false) {
-        obj.false = ruleRollUp(obj.true);
+        obj.false = ruleRollUp(obj.false);
       }
     }
 
@@ -54,8 +55,6 @@ function ruleRollUp(data) {
 
     return result.push(d);
   });
-
-  
 
   return result;
 }

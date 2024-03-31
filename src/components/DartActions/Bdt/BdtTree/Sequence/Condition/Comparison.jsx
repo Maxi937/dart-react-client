@@ -9,43 +9,23 @@ const styles = {
 };
 
 function Equals() {
-  return (
-    <ActionText color="LightGreen">
-      =
-    </ActionText>
-  );
+  return <ActionText color="LightGreen">=</ActionText>;
 }
 
 function NotEquals() {
-  return (
-    <ActionText color="red">
-      !=
-    </ActionText>
-  );
+  return <ActionText color="red">!=</ActionText>;
 }
 
 function GreaterThan() {
-  return (
-    <ActionText color="orange">
-      {">"}
-    </ActionText>
-  );
+  return <ActionText color="orange">{">"}</ActionText>;
 }
 
 function LessThan() {
-  return (
-    <ActionText color="orange">
-      {"<"}
-    </ActionText>
-  );
+  return <ActionText color="orange">{"<"}</ActionText>;
 }
 
 function GreaterThanEqual() {
-  return (
-    <ActionText color="orange">
-      {">="}
-    </ActionText>
-  );
+  return <ActionText color="orange">{">="}</ActionText>;
 }
 
 function LessThanEqual() {
@@ -79,6 +59,7 @@ function getCompareSecondValue(type) {
 }
 
 export default function Comparison({ props }) {
+
   function getOperator(operator) {
     switch (operator) {
       case "eq":
@@ -100,9 +81,13 @@ export default function Comparison({ props }) {
 
   return (
     <Box sx={styles.container}>
-      <ActionText>{getCompareFirstValue(props.compares[0])}</ActionText>
-      {getOperator(props.operator)}
-      <ActionText>{getCompareSecondValue(props.compares[1])}</ActionText>
+      <ActionText>
+        {getCompareFirstValue(props.Comparison.compares[0])}
+      </ActionText>
+      {getOperator(props.Comparison.operator)}
+      <ActionText>
+        {getCompareSecondValue(props.Comparison.compares[1])}
+      </ActionText>
     </Box>
   );
 }

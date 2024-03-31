@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, CircularProgress, Typography, Paper, Chip } from "@mui/material";
+import { Box } from "@mui/material";
 import { Modal } from "@mui/material";
 import { useTheme } from "@emotion/react";
 
@@ -34,8 +34,9 @@ const styles = {
   }),
 };
 
-function DartModal({ children, isOpen, handleClose }) {
+export default function DartModal({ children, isOpen, handleClose }) {
   const theme = useTheme()
+
   return (
     <Modal
       open={isOpen}
@@ -47,5 +48,3 @@ function DartModal({ children, isOpen, handleClose }) {
     </Modal>
   );
 }
-
-export default DartModal;

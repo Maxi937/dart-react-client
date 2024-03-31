@@ -21,13 +21,13 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     background: theme.palette.primaryBackground,
-    border: `4px solid ${
+    border: `2px solid ${
       props.evaluated ? "green" : theme.palette.primaryBackground
     }`,
     transition: "0.2s all ease",
     "&:hover": {
       cursor: "pointer",
-      border: `4px solid ${theme.palette.primaryHighlight}`,
+      border: `2px solid ${theme.palette.primaryHighlight}`,
     },
   }),
   innercontainer: {
@@ -48,7 +48,7 @@ const styles = {
   },
   content: {
     position: "relative",
-    alignItems: "flex-start",
+    alignItems: "center",
     padding: "10px",
   },
   floatRight: {
@@ -76,7 +76,7 @@ export default function If(props) {
           <Box sx={styles.title}>IF</Box>
           <Box sx={styles.content}>
             <Action Icon={<MergeIcon htmlColor="lightgreen" />}>
-              <Condition props={props} />
+              <Condition props={props.condition} />
             </Action>
           </Box>
         </Box>

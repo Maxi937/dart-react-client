@@ -22,7 +22,6 @@ export default function Connector(props) {
         width="10"
         height="10"
         style={styles.svg}
-        xmlns="http://www.w3.org/2000/svg"
       >
         <circle
           width="100%"
