@@ -2,20 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import DartDropzone from "../../../Form/DartDropzone";
 import BdtActions from "./BdtActions";
-import BdtSideMenu from "./BdtSideMenu";
-import QuizIcon from "@mui/icons-material/Quiz";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import DescriptionIcon from "@mui/icons-material/Description";
-import TestView from "./BdtViews/TestView";
-import TreeView from "./BdtViews/TreeView";
 import { useTheme } from "@emotion/react";
-import ContentView from "./BdtViews/ContentView";
 import { useCompileBdt } from "../../../../hooks/useCompileBdt";
-import CenteredSpinner from "../../../Primitives/CenteredSpinner";
-import { useInvalidateBdt } from "../../../../hooks/useAnalyseBdt";
-import { useQueryClient } from "react-query";
 import { readBlobLikeAsync } from "../../../../utils/file-utils";
 import BdtViews from "./BdtViews";
+import { v4 as uuidv4 } from "uuid";
 
 const styles = {
   container: (theme) => ({
@@ -51,16 +42,20 @@ export default function BdtTree(props) {
   const [candidate, setCandidateFile] = useState({});
   const [xml, setXml] = useState("");
   const [view, setView] = useState(0);
+  const [compileKey, setCompileKey] = useState(null)
+  
 
   const { data, refetch, isLoading, isFetching, isError } = useCompileBdt(
     props.documentModel,
     props.env,
     xml,
+    compileKey,
     xml != ""
   );
 
   async function openBdt(xmlFile) {
     const xml = await readBlobLikeAsync(xmlFile);
+    setCompileKey(uuidv4())
     setCandidateFile(xmlFile);
     setXml(xml);
   }

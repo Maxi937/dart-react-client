@@ -4,6 +4,7 @@ import { registerAxiosResponseHandler } from "../utils/service-utils.js";
 registerAxiosResponseHandler(axios);
 
 export const dartService = {
+  
   async getContentGroup(documentName, id, env, signal = null) {
     const { data } = await axios.get(`/api/xpression/${documentName}/content`, {
       params: {
@@ -40,6 +41,22 @@ export const dartService = {
     const { data } = await axios.post(
       `/api/dart/bdt/${documentModel.mdl_nm}`,
       { env: env, documentModel: documentModel, candidate: candidate },
+      {
+        signal,
+      }
+    );
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
+  async migrationTests(documentModel, env, key, signal = null) {
+    const { data } = await axios.post(
+      `/api/dart/migration/${documentModel.mdl_nm}`,
+      { env: env, documentModel: documentModel },
       {
         signal,
       }

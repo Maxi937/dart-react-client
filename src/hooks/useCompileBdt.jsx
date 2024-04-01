@@ -1,10 +1,11 @@
 import { useQuery, useQueries, useQueryClient } from "react-query";
 import { dartService } from "../service/dart-service";
 
-export function useCompileBdt(documentModel, env, xml, enabled) {
+
+export function useCompileBdt(documentModel, env, xml, key, enabled) {
 
   return useQuery({
-    queryKey: ["compileBdt", documentModel.mdl_nm, env, xml],
+    queryKey: ["compileBdt", documentModel.mdl_nm, env, key],
     queryFn: ({ signal }) =>
       dartService.compileBdt(documentModel, env, xml, signal),
     staleTime: Infinity,

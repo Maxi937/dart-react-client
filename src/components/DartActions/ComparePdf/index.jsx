@@ -7,6 +7,7 @@ import {
   cancelComparesQuery,
   useInvalidateCompares,
 } from "../../../hooks/useCompare.jsx";
+import DartButton from "../../Form/DartButton/index.jsx";
 
 const styles = {
   container: {
@@ -107,14 +108,10 @@ function CompareForm() {
             Clear
           </Button>
         ) : (
-          <Button
-            onClick={handleSubmit}
-            type="submit"
-            color="primary"
-            sx={styles.submitButton(canGenerate)}
-          >
+          <DartButton handleClick={handleSubmit} disabled={!canGenerate}>
             Compare
-          </Button>
+          </DartButton>
+        
         )}
       </Box>
 

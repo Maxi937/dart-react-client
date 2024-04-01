@@ -1,10 +1,15 @@
 import React, { useContext, useState } from "react";
 import { Typography, Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import Spacer from "../../../../Primitives/Spacer";
 
 const styles = {
   header: {
-    padding: "5px",
+    background: "black",
+    width: "fit-content",
+    borderRadius: "20px",
+    padding: "5px 20px",
+    margin: "auto",
     display: "flex",
     gap: "10px",
     alignItems: "center",
@@ -19,6 +24,7 @@ const styles = {
   },
   status: (pass) => ({
     color: pass ? "lightgreen" : "red",
+    fontSize: "24px",
   }),
   revunit: {
     margin: "5px",
@@ -45,12 +51,14 @@ export default function RevisionUnitDetail(props) {
 
   return (
     <Box>
+      <Spacer padding={"5px"}></Spacer>
       <Box sx={styles.header}>
         <Typography>Status:</Typography>
         <Typography sx={styles.status(props.pass)}>
           {props.pass ? "pass" : "fail"}
         </Typography>
       </Box>
+      <Spacer padding={"2px"}></Spacer>
 
       {props.result.map((revunit) => (
         <Box sx={styles.revunit}>

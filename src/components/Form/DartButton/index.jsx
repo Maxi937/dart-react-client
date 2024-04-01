@@ -11,26 +11,54 @@ const styles = {
     position: "absolute",
     fontSize: "5px",
   },
-  button: (theme, loading) => ({
-    color: loading ? "transparent" : "white",
-    background: loading ? theme.palette.primaryHighlight : "black",
-    borderRadius: "5px",
-    elevation: "15px",
-    border: `2px solid ${theme.palette.primaryHighlight}`,
-    transition: "all 0.2s ease",
-    "&:hover": {
-      color: loading ? "transparent" : "black",
-      background: theme.palette.primaryHighlight,
-      transform: !loading && "scale(0.95)",
-    },
-  }),
+  button: (theme, loading, disabled) => {
+    if (disabled) {
+      return {
+        color: "grey",
+        background: "black",
+        borderRadius: "5px",
+        elevation: "15px",
+        border: `2px solid black`,
+        "&:hover": {
+          background: "black",
+        },
+      };
+    }
+    return {
+      color: loading ? "transparent" : "white",
+      background: loading ? theme.palette.primaryHighlight : "black",
+      borderRadius: "5px",
+      elevation: "15px",
+      border: `2px solid ${theme.palette.primaryHighlight}`,
+      transition: "all 0.2s ease",
+      "&:hover": {
+        color: loading ? "transparent" : "black",
+        background: theme.palette.primaryHighlight,
+        transform: !loading && "scale(0.95)",
+      },
+    };
+  },
 };
 
-const DartButton = ({ handleClick, loading = false, children }) => {
+const DartButton = ({
+  handleClick = () => {},
+  disabled = false,
+  loading = false,
+  children,
+}) => {
   const theme = useTheme();
 
+  function handleOnClick() {
+    if(!disabled) {
+      handleClick()
+    }
+  }
+
   return (
-    <Button onClick={handleClick} sx={styles.button(theme, loading)}>
+    <Button
+      onClick={handleOnClick}
+      sx={styles.button(theme, loading, disabled)}
+    >
       {children ? children : "Button"}
       {loading && (
         <CircularProgress

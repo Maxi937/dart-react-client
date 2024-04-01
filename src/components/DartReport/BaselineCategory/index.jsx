@@ -2,7 +2,8 @@ import * as React from "react";
 import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { Typography, Box } from "@mui/material";
-import BaselineItem from "../BaselineItem";
+import BaselineItem from "../BaselineItem"
+import { v4 as uuidv4} from "uuid"
 
 const styles = {
   category: (theme) => ({
@@ -23,19 +24,11 @@ const styles = {
 };
 
 export default function BaselineCategory({ baselineCategory }) {
-  console.log(baselineCategory);
-  const theme = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <Box>
-      <Typography sx={styles.category(theme)}>
-        {String(baselineCategory.name).toUpperCase()}
-      </Typography>
-
       <Box sx={styles.baselinesContainer}>
         {baselineCategory.entries.map((item) => (
-          <BaselineItem baselineItem={item} code={baselineCategory.name} />
+          <BaselineItem key={uuidv4()} baselineItem={item} code={baselineCategory.name} />
         ))}
       </Box>
     </Box>

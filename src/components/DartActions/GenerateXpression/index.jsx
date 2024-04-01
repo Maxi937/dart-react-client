@@ -9,6 +9,7 @@ import {
   cancelXpressionDocumentsQuery,
   useInvalidateXpressionDocuments,
 } from "../../../hooks/useXpressionDocuments.jsx";
+import DartButton from "../../Form/DartButton/index.jsx";
 
 const styles = {
   container: {
@@ -112,23 +113,14 @@ function GenerateForm() {
         </Box>
 
         {formSubmitted ? (
-          <Button
-            onClick={handleClear}
-            type="submit"
-            color="primary"
-            sx={styles.submitButton(canGenerate)}
-          >
+          <DartButton handleClick={handleClear} disabled={!canGenerate}>
             Clear
-          </Button>
+          </DartButton>
         ) : (
-          <Button
-            onClick={handleSubmit}
-            type="submit"
-            color="primary"
-            sx={styles.submitButton(canGenerate)}
-          >
-            Generate
-          </Button>
+          <DartButton handleClick={handleSubmit} disabled={!canGenerate}>
+          Generate
+        </DartButton>
+        
         )}
       </Box>
 
