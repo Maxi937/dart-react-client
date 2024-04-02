@@ -15,4 +15,3 @@ Front end React Client for Dart application.
  | ----------------------------------------------- | ------------------ |
  | <https://mui.com/material-ui/material-icons/>   | Material UI Docs   |
  | <https://github.com/wojtekmaj/react-pdf>        | React PDF Docs     |
- | ----------------------------------------------- | ------------------ |
