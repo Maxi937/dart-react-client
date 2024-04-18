@@ -29,7 +29,7 @@ export default function DocGenStats(props) {
   const success = totalSuccess();
   const mostFrequent = mostFrequentDocumentModel();
   const failTolerance = 3;
-  
+
   function totalFailures() {
     let fails = 0;
     props.data.forEach((d) => {
@@ -89,7 +89,9 @@ export default function DocGenStats(props) {
     }
 
     if (fails > success) {
-      return 100;
+      return (
+        <Typography sx={styles.failRate(100, failTolerance)}>{100}%</Typography>
+      );
     } else {
       const failPercent = ((fails / success) * 100).toFixed(2);
       return (
@@ -106,9 +108,7 @@ export default function DocGenStats(props) {
 
       <Stat title={"Success"}>{success}</Stat>
 
-      <Stat title={"Fail Rate"}>
-          {failRate()}
-      </Stat>
+      <Stat title={"Fail Rate"}>{failRate()}</Stat>
 
       <Stat title={"Most Generated"}>{mostFrequent.model}</Stat>
     </Box>

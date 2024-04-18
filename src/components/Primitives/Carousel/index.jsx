@@ -29,17 +29,15 @@ const styles = {
   },
 };
 
-function Carousel({ data, pageSize, children }) {
+function Carousel({ children }) {
   const theme = useTheme();
   const [childToRender, setChildToRender] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log(`Current Child: ` + childToRender);
       nextChild();
     }, 10000);
 
-    //Clearing the interval
     return () => clearInterval(interval);
   }, [childToRender]);
 
@@ -48,7 +46,6 @@ function Carousel({ data, pageSize, children }) {
     const nextChild = childToRender + 1;
 
     if (nextChild < numChildren) {
-      console.log("setting child to render");
       setChildToRender(nextChild);
     } else {
       setChildToRender(0);

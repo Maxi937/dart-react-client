@@ -106,7 +106,7 @@ function GenerateForm() {
 
         <Box sx={styles.modelContainer}>
           <DocumentModelPicker
-            selected={documentModel?.mdl_nm}
+            selected={documentModel?.mdl_nm && documentModel.mdl_nm}
             placeholder={"Document Model"}
             onSelected={handleDocumentModelChange}
           />

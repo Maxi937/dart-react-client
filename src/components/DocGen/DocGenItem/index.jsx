@@ -71,6 +71,8 @@ function DocGenItem({ docgenitem }) {
   const [isOpen, setIsOpen] = useState(false);
   const theme = useTheme();
 
+  console.log(docgenitem)
+
   function handleClick(e) {
     e.stopPropagation();
     setIsOpen(true);

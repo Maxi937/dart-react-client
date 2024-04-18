@@ -37,7 +37,7 @@ rootElement.render(
           </BdtContextProvider>
         </ThemeProvider>
       </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   </LocalizationProvider>
 );

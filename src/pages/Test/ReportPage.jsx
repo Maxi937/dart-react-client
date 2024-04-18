@@ -38,7 +38,7 @@ const ReportPage = (props) => {
         return (
           <Box>
             <Typography sx={styles.category(theme)}>
-              {String(category.name).toUpperCase()}
+              {String("Baseline Test").toUpperCase()}
             </Typography>
             <BaselineCategory baselineCategory={category} />
           </Box>

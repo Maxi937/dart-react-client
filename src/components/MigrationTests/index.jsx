@@ -14,7 +14,7 @@ const styles = {
       display: "flex",
       alignItems: "center",
       gap: "5px",
-	  margin: "10px",
+      margin: "10px",
       padding: "20px",
       backgroundColor: theme.palette.primaryForeground,
       cursor: "pointer",
@@ -48,7 +48,7 @@ const MigrationTests = (props) => {
 
   if (isLoading) {
     return (
-      <Box sx={{ padding: "150px" }}>
+      <Box sx={{ padding: "210px" }}>
         <CenteredSpinner />
       </Box>
     );
