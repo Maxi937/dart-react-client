@@ -7,7 +7,10 @@ const styles = {
 	background: "white",
 	padding: "20px",
     color: "black",
+	wordWrap: "break-word",
 	"& > *": {
+		wordWrap: "break-word",
+		textWrap: "wrap"
 
 	}
 
