@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 
-
 const styles = {
   container: (cursor) => ({
     userSelect: "none",
@@ -29,19 +28,21 @@ const styles = {
     overflowX: "hidden",
   }),
   sideContent: {
-    padding: "30px 0px 0px 10px",
+    padding: "10px",
     direction: "ltr",
+    "& > *": {
+      overflow: "hidden",
+    },
   },
 };
 
-export default function ContentDrawer({children}) {
+export default function ContentDrawer({ children }) {
   const theme = useTheme();
   const [width, setWidth] = useState(320);
   const [cursor, setCursor] = useState("default");
 
   const maxWidth = 800;
   const minWidth = 10;
-
 
   const handler = (mouseDownEvent) => {
     mouseDownEvent.stopPropagation();
@@ -93,9 +94,7 @@ export default function ContentDrawer({children}) {
       onMouseDown={handler}
     >
       <Box sx={styles.drawer(theme, width)}>
-        <Box sx={styles.sideContent}>
-			{children}
-        </Box>
+        <Box sx={styles.sideContent}>{children}</Box>
       </Box>
     </Box>
   );
