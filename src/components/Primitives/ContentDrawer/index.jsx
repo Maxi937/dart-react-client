@@ -1,11 +1,7 @@
-import { render } from "./components";
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
 import { useTheme } from "@emotion/react";
-import Spacer from "../../../Primitives/Spacer";
-import ContentDrawer from "../../../Primitives/ContentDrawer";
+
 
 const styles = {
   container: (cursor) => ({
@@ -38,7 +34,7 @@ const styles = {
   },
 };
 
-export default function BdtSidePanel(props) {
+export default function ContentDrawer({children}) {
   const theme = useTheme();
   const [width, setWidth] = useState(320);
   const [cursor, setCursor] = useState("default");
@@ -90,17 +86,17 @@ export default function BdtSidePanel(props) {
     }
   }
 
-  function onSequenceItemClick(action) {
-
-  }
-
   return (
-    <ContentDrawer>
-      <Typography sx={styles.title}>{props.title}</Typography>
-          <Box sx={styles.rulesList}>
-            {props.sequence.map((obj, index) => index != 0 && render(obj, onSequenceItemClick))}
-          </Box>
-    </ContentDrawer>
-    
+    <Box
+      sx={styles.container(cursor)}
+      onMouseOver={handleMouseOver}
+      onMouseDown={handler}
+    >
+      <Box sx={styles.drawer(theme, width)}>
+        <Box sx={styles.sideContent}>
+			{children}
+        </Box>
+      </Box>
+    </Box>
   );
 }

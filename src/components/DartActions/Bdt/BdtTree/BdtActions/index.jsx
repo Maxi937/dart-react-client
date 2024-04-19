@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import Filepicker from "../../../../Form/MFilepicker";
 import Compile from "./Compile";
 import Test from "./Test";
+import Download from "./Download";
 
 const styles = {
   container: {
@@ -37,6 +38,7 @@ export default function BdtActions(props) {
 
       <Box sx={styles.right}>
         <Compile {...props} />
+        <Download {...props} />
       </Box>
     </Box>
   );

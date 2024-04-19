@@ -86,6 +86,22 @@ export const dartService = {
     return data;
   },
 
+  async getBdt(documentModel, env, signal = null) {
+    const { data } = await axios.get(`/api/xpression/bdt`, {
+      params: {
+        documentName: documentModel.mdl_nm,
+        env: env,
+      },
+      signal: signal,
+    });
+
+    if (!data.success) {
+      throw new Error(data.error);
+    }
+
+    return data;
+  },
+
   async getNotifcations() {
     const { data } = await axios.get("/api/dart/notifications");
 

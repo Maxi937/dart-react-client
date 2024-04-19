@@ -2,26 +2,45 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { getCompileBdtQuery } from "../../../../../hooks/useCompileBdt";
 import Content from "../Content";
+import ContentItem from "../Content/ContentItem";
+import ContentDrawer from "../../../../Primitives/ContentDrawer";
+import DartHtmlViewer from "../../../../DartHtmlViewer";
+import DartButton from "../../../../Form/DartButton";
 
 const styles = {
   container: {
-    padding: "10px",
+    userSelect: "none",
+    display: "flex",
+    height: "100%",
+  },
+  document: {
+    overflow: "auto",
   },
 };
 
 export default function ContentView(props) {
-  const textClassIds = () =>
-    props.compile.content.displayedContentItems.map(
-      (item) => item.InsertTextpiece.textClassId
-    );
+  console.log(props);
+
+
+  function renderHtml() {
+    let html = "";
+    props.compile.content.map((content) => (html += content.html));
+    return html;
+  }
+
+  console.log(renderHtml());
 
   return (
     <Box sx={styles.container}>
-      <Content
-        env={props.env}
-        documentModel={props.documentModel}
-        textClassIds={textClassIds()}
-      />
+      <ContentDrawer>
+        {props.compile.content.map((item) => (
+          <ContentItem {...item} />
+        ))}
+      </ContentDrawer>
+
+      <Box sx={styles.document}>
+        <DartHtmlViewer html={renderHtml()} />
+      </Box>
     </Box>
   );
 }

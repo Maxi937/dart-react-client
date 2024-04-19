@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Paper, Chip } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import DescriptionIcon from '@mui/icons-material/Description';
+import DescriptionIcon from "@mui/icons-material/Description";
+import DartModal from "../../../../Primitives/DartModal";
+import DartHtmlViewer from "../../../../DartHtmlViewer";
+import DartButton from "../../../../Form/DartButton";
+import DartWordHtmlViewer from "../../../../DartWordHtmlViewer";
 
 const styles = {
   container: (theme) => {
@@ -20,8 +24,8 @@ const styles = {
     };
   },
   version: {
-	flex: 1,
-	textAlign: "right"
+    flex: 1,
+    textAlign: "right",
   },
   docInfo: {
     display: "flex",
@@ -34,16 +38,23 @@ const styles = {
 
 export default function ContentItem(props) {
   const theme = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+
 
   return (
-    <Paper sx={styles.container(theme)}>
-      <DescriptionIcon sx={styles.icon}/>
+    <Paper sx={styles.container(theme)} onClick={() => setIsOpen(true)}>
+      <DescriptionIcon sx={styles.icon} />
       <Box sx={styles.docInfo}>
-        <Typography>{props.NAME}</Typography>
+        <Typography>{props.name}</Typography>
       </Box>
-	  <Box sx={styles.version}>
-        <Typography>{props.MAJOR_VERSION}.{props.MINOR_VERSION}</Typography>
+      <Box sx={styles.version}>
+        <Typography>
+          {props.majorVersion}.{props.minorVersion}
+        </Typography>
       </Box>
+      <DartModal isOpen={isOpen} handleClose={() => setIsOpen(false)}>
+        <DartWordHtmlViewer html={props.html} filename={props.name}/>
+      </DartModal>
     </Paper>
   );
 }
